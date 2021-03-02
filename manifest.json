@@ -1,3 +1,11 @@
 {
-
+  "manifest_version": 3,
+  "name": "Animated new tab background",
+  "description": "Render a dynamic 3D background on new tab pages, packed as a chrome extension. Source code is available on github.",
+  "version": "0.1",
+  "short_name" : "Animated new tab",
+  "chrome_url_overrides" : {
+    "newtab" : "index.html"
+  },
+  "permissions": ["storage"]
 }

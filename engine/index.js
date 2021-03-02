@@ -1,3 +1,4 @@
+//temp code to test css styling
 window.onload = () => {
     let ctx = document.getElementById("main").getContext("2d");
 

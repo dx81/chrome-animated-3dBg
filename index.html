@@ -3,10 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <title>New tab</title>
-    <link href="index.css" rel="stylesheet"/>
+    <link href="page/index.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+
+    <script src="page/menu.js"></script>
     <script src="engine/index.js"></script>
 </head>
 <body>
     <canvas id="main"></canvas>
+    <button class="iconButton" id="openButton">
+        <i class="fa fa-cog icon"></i>
+    </button>
+    <div class="menu" id="menuDiv">
+        <h4 style="text-align: center">Settings</h4>
+
+
+
+        <button class="button" id="closeButton" style="border: none; right: 20px; position: absolute;">Close</button>
+    </div>
 </body>
 </html>

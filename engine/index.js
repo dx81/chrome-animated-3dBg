@@ -2,7 +2,6 @@ import defaultJSON from "./defaultJSON.js"
 import Canvas from "./js/canvas.js";
 import Geometry from "./js/geometry.js";
 import { Engine, Entity } from "./js/engine.js";
-import Vector from "./js/vector.js";
 
 window.onload = () => {
     chrome.storage.sync.get("sceneData", (res) => {
@@ -29,8 +28,10 @@ const ready = (json) => {
 
     let engine = new Engine(display, []);
 
-    engine.scene.push(new Entity({ position: [ 100, 0, 0 ], rotation: [ Math.PI / 4, 0, 0 ], scale: [ 100, 100, 100 ] }, Geometry.CUBE, { renderFaces: false }));
-    engine.scene.push(new Entity({ position: [ 0, 100, 0 ], rotation: [ 0, Math.PI / 4, 0 ], scale: [ 100, 100, 100 ] }, Geometry.CUBE, { renderFaces: false }));
-    engine.scene.push(new Entity({ position: [ 0, 0, 100 ], rotation: [ 0, 0, Math.PI / 4 ], scale: [ 100, 100, 100 ] }, Geometry.CUBE, { renderFaces: false }));
+    //engine.scene.push(new Entity({ scale: [ 100, 100, 100 ] }, Geometry.DODECAHEDRON, { renderFaces: 1 }));
+
+    engine.scene.push(new Entity({ position: [ 100, 0, 0 ], rotation: [ Math.PI / 4, 0, 0 ], scale: [ 100, 100, 100 ] }, Geometry.CUBE, { renderFaces: 1 }));
+    engine.scene.push(new Entity({ position: [ 0, 100, 0 ], rotation: [ 0, Math.PI / 4, 0 ], scale: [ 100, 100, 100 ] }, Geometry.CUBE, { renderFaces: 1 }));
+    engine.scene.push(new Entity({ position: [ 0, 0, 100 ], rotation: [ 0, 0, Math.PI / 4 ], scale: [ 100, 100, 100 ] }, Geometry.CUBE, { renderFaces: 1 }));
     engine.loop(0);
 }

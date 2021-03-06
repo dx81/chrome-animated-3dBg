@@ -72,7 +72,7 @@ export class Engine {
     renderVertices(entity, entity_id) {
         if (!entity.renderer.renderVertices) return;
         for (let i = 0; i < entity.points.length; i++) {
-            this.display.circle(entity.points[i], 3, entity.vertex_shader(this, entity_id, i), "fill");
+            this.display.circle(entity.points[i], 3, entity.renderer.vertexShader(this, entity_id, i), "fill");
             this.frame_draws++;
         }
     }
@@ -82,7 +82,7 @@ export class Engine {
         for (let i = 0; i < entity.geometry.edges.length; i++) {
             let a = entity.points[entity.geometry.edges[i][0]];
             let b = entity.points[entity.geometry.edges[i][1]];
-            this.display.line(a, b, entity.edge_shader(this, entity_id, i));
+            this.display.line(a, b, entity.renderer.edgeShader(this, entity_id, i));
             this.frame_draws++;
         }
     }
@@ -94,7 +94,7 @@ export class Engine {
             for (let j = 0; j < entity.geometry.faces[i].length; j++) {
                 vertices[j] = entity.points[entity.geometry.faces[i][j]];
             }
-            this.display.polygon(vertices, entity.face_shader(this, entity_id, i));
+            this.display.polygon(vertices, entity.renderer.faceShader(this, entity_id, i));
             this.frame_draws++;
         }
     }
@@ -134,6 +134,9 @@ export class Entity {
     };
 
     static renderer = {
+        vertexShader: () => { },
+        edgeShader: () => { },
+        faceShader: () => { },
         vertexColor: "#FFFFFF",
         edgeColor: "#FFFFFF",
         faceColor: "#FFFFFF",
@@ -186,43 +189,5 @@ export class Entity {
             vertex = Matrix.invertXY(Matrix.multiply(rotation_matrix_z, vertex));
             this.coords[i] = [ Vector.add(vertex[0], this.transform.position) ];
         }
-    }
-
-    vertex_shader(engine, entity_id, vertex_id) {
-        //return "#00FF00"
-        let ms = Date.now();
-        let speed = 0.002;
-        let [ r, g, b ] = [
-            127.5 * (Math.sin(ms * speed) + 1),
-            127.5 * (Math.sin(ms * speed + 2 * Math.PI / 3) + 1),
-            127.5 * (Math.sin(ms * speed + 4 * Math.PI / 3) + 1),
-        ];
-        return engine.toHexColor(r, g, b);
-    }
-
-    edge_shader(engine, entity_id, edge_id) {
-        //return "#FF0000"
-        let ms = Date.now();
-        let speed = 0.01;
-        let [ r, g, b ] = [
-            127.5 * (Math.sin(entity_id / 10 + edge_id + ms * speed) + 1),
-            127.5 * (Math.sin(entity_id / 10 + edge_id + ms * speed + 2 * Math.PI / 3) + 1),
-            127.5 * (Math.sin(entity_id / 10 + edge_id + ms * speed + 4 * Math.PI / 3) + 1),
-        ];
-        return engine.toHexColor(r, g, b);
-    }
-
-    face_shader(engine, entity_id, face_id) {
-        //return "#0050FF"
-        //face_id = 0;
-        let ms = Date.now();
-        let speed = 0.005;
-        let [ r, g, b ] = [
-            127.5 * (Math.sin(entity_id + face_id * 0.5 + ms * speed) + 1),
-            127.5 * (Math.sin(entity_id + face_id * 0.5 + ms * speed + 2 * Math.PI / 3) + 1),
-            127.5 * (Math.sin(entity_id + face_id * 0.5 + ms * speed + 4 * Math.PI / 3) + 1),
-        ];
-        //if (!entity_id && !face_id) console.log(r, g, b)
-        return engine.toHexColor(r, g, b);
     }
 }

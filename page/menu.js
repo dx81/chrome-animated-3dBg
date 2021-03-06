@@ -53,6 +53,7 @@ const JSONManagement = {
             jsonData = JSON.parse(data);
         } catch (e) {
             alert(`This file is not valid JSON.\nError: ${e}`);
+            return;
         }
 
         console.log(jsonData);

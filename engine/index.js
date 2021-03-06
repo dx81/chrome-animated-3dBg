@@ -10,10 +10,13 @@ window.onload = () => {
         ready(res.sceneData);
     })
 
+    document.getElementById("main").width = window.innerWidth;
+    document.getElementById("main").height = window.innerHeight;
 
-    let ctx = document.getElementById("main").getContext("2d");
-    ctx.fillStyle = "#000000";
-    ctx.fillRect(0, 0, window.innerWidth, window.innerHeight);
+    window.onresize = () => {
+        document.getElementById("main").width = window.innerWidth;
+        document.getElementById("main").height = window.innerHeight;
+    }
 }
 
 const ready = (json) => {

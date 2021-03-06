@@ -1,5 +1,5 @@
-import Matrix from "./matrix";
-import Vector from "./vector";
+import Matrix from "./matrix.js";
+import Vector from "./vector.js";
 
 export default class Entity {
 

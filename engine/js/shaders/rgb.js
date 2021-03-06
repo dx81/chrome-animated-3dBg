@@ -1,4 +1,3 @@
-
 export const vertexShader = (engine, entity_id, vertex_id) => {
     let ms = Date.now();
     let speed = 0.002;

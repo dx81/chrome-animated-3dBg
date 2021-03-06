@@ -1,7 +1,8 @@
 import defaultJSON from "./defaultJSON.js"
 import Canvas from "./js/canvas.js";
 import Geometry from "./js/geometry.js";
-import { Engine, Entity } from "./js/engine.js";
+import { Engine } from "./js/engine.js";
+import Entity from "./js/entity.js";
 
 window.onload = () => {
     chrome.storage.sync.get("sceneData", (res) => {

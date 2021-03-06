@@ -3,12 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <title>New tab</title>
-    <link href="page/index.css" rel="stylesheet"/>
+    <link href="page/page.css" rel="stylesheet"/>
+    <link href="page/menu.css" rel="stylesheet"/>
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
 
-    <script src="page/menu.js"></script>
+    <script src="page/menu.js" type="module"></script>
     <script src="engine/index.js"></script>
 </head>
 <body>
@@ -16,12 +18,28 @@
     <button class="iconButton" id="openButton">
         <i class="fa fa-cog icon"></i>
     </button>
+
     <div class="menu" id="menuDiv">
         <h4 style="text-align: center">Settings</h4>
+        <p>
+            Objects to render are defined by a JSON file. See the documentation <a href="#">here</a>.
+        </p>
 
+        <div style="padding-bottom: 7px;">
+            <label for="uploadLabel" class="normalLabel" id="uploadLabelLabel">Upload a new JSON file:</label>
+            <label for="uploadButton" id="uploadLabel" class="menuButton">Upload</label>
+            <input id="uploadButton" type="file">
+        </div>
+        <div class="divSpacer">
+            <label for="downloadButton" class="normalLabel">Download current JSON:</label>
+            <button id="downloadButton" class="menuButton">Download</button>
+        </div>
+        <div class="divSpacer">
+            <label for="clearButton" class="normalLabel">Clear current JSON:</label>
+            <button id="clearButton" class="menuButton">Clear</button>
+        </div>
 
-
-        <button class="button" id="closeButton" style="border: none; right: 20px; position: absolute;">Close</button>
+        <button class="menuButton" id="closeButton">Close</button>
     </div>
 </body>
 </html>

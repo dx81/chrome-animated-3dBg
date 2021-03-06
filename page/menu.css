@@ -1,0 +1,50 @@
+.menu {
+    display: none;
+    background: white;
+    padding: 10px;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 500px;
+    height: 300px;
+    margin-left: -250px;   /* negative half of width above */
+    margin-top: -150px;   /* negative half of height above */
+
+    border-radius: 7px;
+}
+
+.menuButton {
+    background: transparent;
+    border-radius: 3px;
+    border: solid 1px black;
+    cursor: pointer;
+}
+
+.normalLabel {
+    margin-right: 15px;
+}
+
+a {
+    color: black;
+}
+
+.divSpacer {
+    padding-bottom: 5px;
+}
+
+#closeButton {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+}
+
+/* Upload button custom styling */
+
+#uploadButton {
+    display: none;
+}
+
+#uploadLabel {
+    padding: 1px 6px;
+}

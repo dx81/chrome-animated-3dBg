@@ -194,8 +194,8 @@ export class Entity {
         let speed = 0.002;
         let [ r, g, b ] = [
             127.5 * (Math.sin(ms * speed) + 1),
-            127.5 * (Math.sin(ms * speed + Math.PI / 3) + 1),
-            127.5 * (Math.sin(ms * speed + Math.PI * 2 / 3) + 1),
+            127.5 * (Math.sin(ms * speed + 2 * Math.PI / 3) + 1),
+            127.5 * (Math.sin(ms * speed + 4 * Math.PI / 3) + 1),
         ];
         return engine.toHexColor(r, g, b);
     }
@@ -206,8 +206,8 @@ export class Entity {
         let speed = 0.01;
         let [ r, g, b ] = [
             127.5 * (Math.sin(entity_id / 10 + edge_id + ms * speed) + 1),
-            127.5 * (Math.sin(entity_id / 10 + edge_id + ms * speed + Math.PI / 3) + 1),
-            127.5 * (Math.sin(entity_id / 10 + edge_id + ms * speed + Math.PI * 2 / 3) + 1),
+            127.5 * (Math.sin(entity_id / 10 + edge_id + ms * speed + 2 * Math.PI / 3) + 1),
+            127.5 * (Math.sin(entity_id / 10 + edge_id + ms * speed + 4 * Math.PI / 3) + 1),
         ];
         return engine.toHexColor(r, g, b);
     }
@@ -219,8 +219,8 @@ export class Entity {
         let speed = 0.005;
         let [ r, g, b ] = [
             127.5 * (Math.sin(entity_id + face_id * 0.5 + ms * speed) + 1),
-            127.5 * (Math.sin(entity_id + face_id * 0.5 + ms * speed + Math.PI / 3) + 1),
             127.5 * (Math.sin(entity_id + face_id * 0.5 + ms * speed + 2 * Math.PI / 3) + 1),
+            127.5 * (Math.sin(entity_id + face_id * 0.5 + ms * speed + 4 * Math.PI / 3) + 1),
         ];
         //if (!entity_id && !face_id) console.log(r, g, b)
         return engine.toHexColor(r, g, b);

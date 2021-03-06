@@ -12,6 +12,14 @@ window.onload = () => {
 
         ready(res.sceneData);
     })
+
+    document.getElementById("main").width = window.innerWidth;
+    document.getElementById("main").height = window.innerHeight;
+
+    window.onresize = () => {
+        document.getElementById("main").width = window.innerWidth;
+        document.getElementById("main").height = window.innerHeight;
+    }
 }
 
 const ready = (json) => {

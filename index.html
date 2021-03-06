@@ -11,7 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
 
     <script src="page/menu.js" type="module"></script>
-    <script src="engine/index.js"></script>
+    <script src="engine/index.js" type="module"></script>
 </head>
 <body>
     <canvas id="main"></canvas>
@@ -22,17 +22,20 @@
     <div class="menu" id="menuDiv">
         <h4 style="text-align: center">Settings</h4>
         <p>
-            Objects to render are defined by a JSON file. See the documentation <a href="#">here</a>.
+            Objects to render are defined by a JSON file (if no settings are present the default is used). <br/>
+            See the documentation <a href="#">here</a>.
         </p>
 
         <div style="padding-bottom: 7px;">
             <label for="uploadLabel" class="normalLabel" id="uploadLabelLabel">Upload a new JSON file:</label>
             <label for="uploadButton" id="uploadLabel" class="menuButton">Upload</label>
-            <input id="uploadButton" type="file">
+            <input id="uploadButton" type="file" accept=".json">
         </div>
         <div class="divSpacer">
             <label for="downloadButton" class="normalLabel">Download current JSON:</label>
-            <button id="downloadButton" class="menuButton">Download</button>
+            <a id="downloadButtonWrapper" download="scene.json">
+                <button id="downloadButton" class="menuButton">Download</button>
+            </a>
         </div>
         <div class="divSpacer">
             <label for="clearButton" class="normalLabel">Clear current JSON:</label>

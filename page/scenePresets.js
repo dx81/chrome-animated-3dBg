@@ -10,8 +10,10 @@ const mapToButtons = () => {
         newButton.setAttribute("id", key);
         newButton.innerText = key;
 
-        newButton.addEventListener("click", (() => {
-            //TODO: implement
+        newButton.addEventListener("click", (function () {
+            chrome.storage.sync.set({sceneData : this.data}, () => {
+                location.reload();
+            });
         }).bind({data : Scenes[key]}));
 
         document.getElementById("buttonHolderDiv").appendChild(newButton);

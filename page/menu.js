@@ -1,4 +1,4 @@
-import mapToButtons from "./scenePresets";
+import mapToButtons from "./scenePresets.js";
 
 const mapFn = (obj) => {
     for (let key in obj) {

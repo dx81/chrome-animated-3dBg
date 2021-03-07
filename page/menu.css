@@ -6,9 +6,9 @@
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 550px;
+    width: 600px;
     height: 300px;
-    margin-left: -275px;   /* negative half of width above */
+    margin-left: -300px;   /* negative half of width above */
     margin-top: -150px;   /* negative half of height above */
 
     border-radius: 7px;
@@ -33,7 +33,7 @@ a {
     padding-bottom: 5px;
 }
 
-#closeButton {
+#closeButton, #errorCloseButton {
     position: absolute;
     bottom: 20px;
     right: 20px;

@@ -3,6 +3,7 @@ import Canvas from "./js/canvas.js";
 import Geometry from "./js/geometry.js";
 import { Engine, Scene } from "./js/engine.js";
 import Entity from "./js/entity.js";
+import Deserializer from "./js/deserialize.js";
 
 window.onload = () => {
     chrome.storage.sync.get("sceneData", (res) => {
@@ -18,7 +19,24 @@ window.onload = () => {
     document.getElementById("main").height = window.innerHeight;
 }
 
+const convert = async (json) => {
+    let deserializer = new Deserializer(json);
+
+    let valid = deserializer.validate();
+    if (valid !== true) {
+        document.getElementById("errorDiv").style.display = "block";
+        document.getElementById("errorMessage").innerHTML = valid;
+    }
+
+    return await deserializer.generate();
+}
+
 const ready = async (json) => {
+    //NOTE: entities are still empty, creation is not implemented
+    let entities = await convert(json);
+
+
+
     let display = new Canvas("#main", "", [ 1, 1 ], [ 1200, 600 ], "center").clear("#000000");
 
     window.onresize = () => {

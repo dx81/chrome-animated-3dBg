@@ -9,7 +9,9 @@ document.addEventListener('DOMContentLoaded', function() {
         closeButton : ["click", menu.close],
 
         uploadButton : ["change", JSONManagement.uploadHandler],
-        clearButton : ["click", JSONManagement.clearHandler]
+        clearButton : ["click", JSONManagement.clearHandler],
+
+        errorCloseButton : ["click", errorBoxClose]
     });
 
     JSONManagement.setupDownload();
@@ -68,4 +70,8 @@ const JSONManagement = {
             document.getElementById("downloadButtonWrapper").setAttribute("href", `data:text/plain;charset=utf-8,${encodeURIComponent(JSON.stringify(res))}`);
         })
     }
+}
+
+const errorBoxClose = () => {
+    document.getElementById("errorDiv").style.display = "none";
 }

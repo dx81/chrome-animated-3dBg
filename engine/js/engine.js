@@ -120,5 +120,16 @@ export class Scene extends Array {
     static async deserialize (json) {
 
     }
+
+    static serialize(scene, spaces = 0) {
+        let json = [];
+        for (let i = 0; i < scene.length; i++) {
+            let entity = { ...scene[i] };
+            entity.coords = undefined;
+            entity.points = undefined;
+            json[i] = entity;
+        }
+        return JSON.stringify(json, null, spaces);
+    }
 }
 

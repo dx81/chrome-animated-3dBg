@@ -1,5 +1,6 @@
 
-export function update(engine) {
-    this.transform.rotation[0] += engine.dt / 1090;
-    this.transform.rotation[1] += engine.dt / 3090;
+export function update([ rotation = [ 1, 1, 1 ] ], engine) {
+    this.transform.rotation[0] += rotation[0] * engine.dt * 0.001;
+    this.transform.rotation[1] += rotation[1] * engine.dt * 0.001;
+    this.transform.rotation[2] += rotation[2] * engine.dt * 0.001;
 };

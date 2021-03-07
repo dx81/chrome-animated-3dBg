@@ -1,7 +1,7 @@
 import defaultJSON from "./defaultJSON.js"
 import Canvas from "./js/canvas.js";
 import Geometry from "./js/geometry.js";
-import { Engine } from "./js/engine.js";
+import { Engine, Scene } from "./js/engine.js";
 import Entity from "./js/entity.js";
 
 window.onload = () => {
@@ -31,10 +31,23 @@ const ready = async (json) => {
 
     //engine.scene.push(new Entity({ scale: [ 100, 100, 100 ] }, Geometry.DODECAHEDRON, { renderFaces: 1 }));
 
-    engine.scene.push(await new Entity({ position: [ 100, 0, 0 ], rotation: [ Math.PI / 4, 0, 0 ], scale: [ 100, 100, 100 ] }, Geometry.CUBE, { useShaders: 1, shaderPath: "rgb.js" }, [ "spin.js" ]));
-    engine.scene.push(await new Entity({ position: [ 0, 100, 0 ], rotation: [ 0, Math.PI / 4, 0 ], scale: [ 100, 100, 100 ] }, Geometry.CUBE, { useShaders: 1, shaderPath: "rgb.js" }, [ "spin.js" ]));
-    engine.scene.push(await new Entity({ position: [ 0, 0, 100 ], rotation: [ 0, 0, Math.PI / 4 ], scale: [ 100, 100, 100 ] }, Geometry.CUBE, { useShaders: 1, shaderPath: "rgb.js" }, [ "spin.js" ]));
+    // engine.scene.push(await new Entity({ position: [ 100, 0, 0 ], rotation: [ Math.PI / 4, 0, 0 ], scale: [ 100, 100, 100 ] }, Geometry.CUBE, { useShaders: 1, shaderPath: "rgb.js" }, [ "spin.js" ]));
+    // engine.scene.push(await new Entity({ position: [ 0, 100, 0 ], rotation: [ 0, Math.PI / 4, 0 ], scale: [ 100, 100, 100 ] }, Geometry.CUBE, { useShaders: 1, shaderPath: "rgb.js" }, [ "spin.js" ]));
+    // engine.scene.push(await new Entity({ position: [ 0, 0, 100 ], rotation: [ 0, 0, Math.PI / 4 ], scale: [ 100, 100, 100 ] }, Geometry.CUBE, { useShaders: 1, shaderPath: "rgb.js" }, [ "spin.js" ]));
 
-    console.log(JSON.stringify(engine.scene[0], null, 4))
+    let geometry = { ...Geometry.CUBE, faces: Geometry.cube_faces_triangles }
+
+    let path = "spin.js"; let args = [ [ 1, 1/3, 0 ] ];
+    engine.scene.push(await new Entity({ position: [ 0, 0, 0 ], scale: [ 100, 100, 100 ] }, geometry, { shaderPath: "rgb.js" }, [ { path, args } ]));
+    engine.scene.push(await new Entity({ position: [ 0, 100, 0 ], scale: [ 100, 100, 100 ] }, geometry, { shaderPath: "rgb.js" }, [ { path, args } ]));
+    engine.scene.push(await new Entity({ position: [ 0, -100, 0 ], scale: [ 100, 100, 100 ] }, geometry, { shaderPath: "rgb.js" }, [ { path, args } ]));
+    engine.scene.push(await new Entity({ position: [ -300, 0, 0 ], scale: [ 100, 100, 100 ] }, geometry, { shaderPath: "rgb.js" }, [ { path, args } ]));
+    engine.scene.push(await new Entity({ position: [ -300, 100, 0 ], scale: [ 100, 100, 100 ] }, geometry, { shaderPath: "rgb.js" }, [ { path, args } ]));
+    engine.scene.push(await new Entity({ position: [ -300, -100, 0 ], scale: [ 100, 100, 100 ] }, geometry, { shaderPath: "rgb.js" }, [ { path, args } ]));
+    engine.scene.push(await new Entity({ position: [ 300, 0, 0 ], scale: [ 100, 100, 100 ] }, geometry, { shaderPath: "rgb.js" }, [ { path, args } ]));
+    engine.scene.push(await new Entity({ position: [ 300, 100, 0 ], scale: [ 100, 100, 100 ] }, geometry, { shaderPath: "rgb.js" }, [ { path, args } ]));
+    engine.scene.push(await new Entity({ position: [ 300, -100, 0 ], scale: [ 100, 100, 100 ] }, geometry, { shaderPath: "rgb.js" }, [ { path, args } ]));
+
+    console.log(Scene.serialize(engine.scene));
     engine.loop(0);
 }

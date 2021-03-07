@@ -212,9 +212,9 @@ export default class Geometry {
         return out;
     })();
 
-    static CUBOID_Faces_TRIANGLES = (() => {
+    static cube_faces_triangles = (() => {
         //return this.CUBOID_Faces.map(face => [ face [0], face[1] , face[3], face[2] ]);
-        return this.CUBOID_Faces.map(face => [ face [0], face[1] , face[3] ]);
+        return this.CUBE.faces.map(face => [ face [0], face[1] , face[3] ]);
     })();
 
     static construct_regular_convex(vertex_count, radius = 1, phase = 0) {
@@ -282,12 +282,11 @@ export default class Geometry {
 //    Geometry.DODECAHEDRON.Vertices[i + 4 * 4] = [  a * phi, b * iphi,        0 ];
 //}
 
-for (let i = 0; i < 2; i++) {
-    //Geometry.DODECAHEDRON.Edge[i * 1] = [ 2 * 4 + 2 * i, 2 * 4 + 2 * i + 1 ];
-    //Geometry.DODECAHEDRON.Edge[i * 2] = [ 3 * 4 + 2 * i, 3 * 4 + 2 * i + 1 ];
-    //Geometry.DODECAHEDRON.Edge[i * 3] = [ 4 * 4 + 2 * i, 4 * 4 + 2 * i + 1 ];
-
-    //Geometry.DODECAHEDRON.Edge[i * 1] = [ 2 * 4 + i, 2 * 4 + i + 1 ];
-    //Geometry.DODECAHEDRON.Edge[i * 2] = [ 3 * 4 + i, 3 * 4 + i + 1 ];
-    //Geometry.DODECAHEDRON.Edge[i * 3] = [ 4 * 4 + i, 4 * 4 + i + 1 ];
-}
+//for (let i = 0; i < 2; i++) {
+//    Geometry.DODECAHEDRON.Edge[i * 1] = [ 2 * 4 + 2 * i, 2 * 4 + 2 * i + 1 ];
+//    Geometry.DODECAHEDRON.Edge[i * 2] = [ 3 * 4 + 2 * i, 3 * 4 + 2 * i + 1 ];
+//    Geometry.DODECAHEDRON.Edge[i * 3] = [ 4 * 4 + 2 * i, 4 * 4 + 2 * i + 1 ]
+//    Geometry.DODECAHEDRON.Edge[i * 1] = [ 2 * 4 + i, 2 * 4 + i + 1 ];
+//    Geometry.DODECAHEDRON.Edge[i * 2] = [ 3 * 4 + i, 3 * 4 + i + 1 ];
+//    Geometry.DODECAHEDRON.Edge[i * 3] = [ 4 * 4 + i, 4 * 4 + i + 1 ];
+//}

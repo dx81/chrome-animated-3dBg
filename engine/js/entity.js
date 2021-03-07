@@ -3,41 +3,47 @@ import Vector from "./vector.js";
 
 export default class Entity {
 
-    static transform = {
-        position: [ 0, 0, 0 ],
-        rotation: [ 0, 0, 0 ],
-        scale: [ 1, 1, 1 ],
-        offset: [ 0, 0, 0 ],
-    };
+    static transform() {
+        return {
+            position: [ 0, 0, 0 ],
+            rotation: [ 0, 0, 0 ],
+            scale: [ 1, 1, 1 ],
+            offset: [ 0, 0, 0 ],
+        };
+    }
 
-    static geometry = {
-        vertices: [],
-        edges: [],
-        faces: [],
-        baseModel: undefined,
-    };
+    static geometry() {
+        return {
+            vertices: [],
+            edges: [],
+            faces: [],
+            baseModel: undefined,
+        };
+    }
 
-    static renderer = {
-        vertexShader: () => "#FFFFFF",
-        edgeShader: () => "#FFFFFF",
-        faceShader: () => "#FFFFFF",
-        vertexColor: "#FFFFFF",
-        edgeColor: "#FFFFFF",
-        faceColor: "#FFFFFF",
-        render: true,
-        renderVertices: true,
-        renderEdges: true,
-        renderFaces: true,
-        useShaders: true,
-        shaderPath: {},
+    static renderer() {
+        return {
+            vertexShader: () => "#FFFFFF",
+            edgeShader: () => "#FFFFFF",
+            faceShader: () => "#FFFFFF",
+            vertexColor: "#FFFFFF",
+            edgeColor: "#FFFFFF",
+            faceColor: "#FFFFFF",
+            render: true,
+            renderVertices: true,
+            renderEdges: true,
+            renderFaces: true,
+            useShaders: true,
+            shaderPath: {},
+        };
     };
 
     static shaderTypes = [ "vertexShader", "edgeShader", "faceShader" ];
 
     constructor(transform, geometry, renderer, scripts, meta) {
-        this.transform = { ...Entity.transform, ...transform };
-        this.geometry = { ...Entity.geometry, ...geometry };
-        this.renderer = { ...Entity.renderer, ...renderer };
+        this.transform = { ...Entity.transform(), ...transform };
+        this.geometry = { ...Entity.geometry(), ...geometry };
+        this.renderer = { ...Entity.renderer(), ...renderer };
         this.scripts = [];
         this.meta = meta;
         this.coords = [];
@@ -85,12 +91,13 @@ export default class Entity {
         }
     }
 
-    async importScripts(sources) {
-        await Promise.all(sources.map(async (path, index) => {
+    async importScripts(scripts) {
+        await Promise.all(scripts.map(async ({ path, args }, index) => {
             this.scripts[index] = {
                 ...Object.fromEntries(Object.entries(await import(`./scripts/${path}`))
-                    .map(([ key, method ]) => [ key, method.bind(this) ])),
-                path
+                    .map(([ key, method ]) => [ key, method.bind(this, args || []) ])),
+                path,
+                args,
             };
         }));
         return this;
@@ -103,6 +110,7 @@ export default class Entity {
         await Promise.all(Object.entries(path).map(async ([ shader, shaderPath ]) => {
             this.renderer[shader] = (await import(`./shaders/${shaderPath}`))[shader].bind(this);
         }));
+        this.renderer.shaderPath = path;
         return this;
     }
 }

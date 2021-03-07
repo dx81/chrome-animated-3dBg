@@ -1,6 +1,10 @@
 import Entity from "./entity.js";
 import { Diverse, Nullable, StringAbstract, NumberAbstract, ArrayAbstract, BooleanAbstract, ObjectAbstract} from "./abstract.js";
 
+const newLineChar = "<br/>";
+
+//TODO: implement paths for scripts, shaders, geometry, etc.
+
 const layout2 = new ObjectAbstract({
     transform : new ObjectAbstract({
         position : new ArrayAbstract(3, new NumberAbstract()),
@@ -28,15 +32,23 @@ const layout2 = new ObjectAbstract({
 export default class Deserializer {
     constructor (json) {
         this.json = json;
+        this.validationPassed = false;
     }
 
-    _validate () {
-        return layout2.validate(this.json);
+    validate () {
+        let valid = layout2.validate(this.json);
+
+        if (!valid) {
+            return layout2.error(this.json).join(newLineChar);
+        } else {
+            this.validationPassed = true;
+        }
+
+        return valid;
     }
 
     async generate () {
-        //TODO: test validators
-        if (!this._validate()) return [];
+        if (!this.validationPassed) return [];
 
         //TODO: generate entities and return
     }

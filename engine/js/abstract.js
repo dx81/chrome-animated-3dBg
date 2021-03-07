@@ -1,26 +1,32 @@
+const tabChar = "&nbsp;&nbsp;&nbsp;&nbsp;";
+
 export class ArrayAbstract {
     constructor (size, type) {
         this.size = size;
         this.type = type;
+        this.interalErrors = [];
 
         this.name = "Array";
     }
 
     validate (input) {
         if (!Array.isArray (input)) return false;
-        if (this.size !== null && input.length !== this.size) return false;
+        if (this.size !== null && input.length !== this.size) {
+            this.interalErrors.push("Array is of wrong length.");
+            return false;
+        }
 
-        return input.reduce((val, failed) => {
+        return !input.reduce((failed, val, index) => {
             if (failed) return true;
             if (this.type.validate(val)) return false;
 
-            this.type.error(val);
+            this.interalErrors.push("Error at index " + index + ":", ...this.type.error(val).map(str => tabChar + str))
             return true;
         }, false);
     }
 
     error (input) {
-        alert (`The following input may only be an array of ${this.type.name} ${this.size !== null ? "(with length " + this.size + ")" : ""} but is not.\n${JSON.stringify(input)}`);
+        return [`This value may only be an array of ${this.type.name} ${this.size !== null ? "(with length " + this.size + ") " : ""}but is not.`, ...this.interalErrors];
     }
 }
 
@@ -41,7 +47,7 @@ export class NumberAbstract {
     }
 
     error (input) {
-        alert(`The value ${input} may only be a number but ${this.min !== undefined || this.max !== undefined ? "is out of range." : "is not a number."}`);
+        return  [`The value \"${input}\" may only be a number but ${this.min !== undefined || this.max !== undefined ? "is out of range." : "is not a number."}`];
     }
 }
 
@@ -60,7 +66,7 @@ export class StringAbstract {
     }
 
     error (input) {
-        alert(`The value ${input} may only be a string ${this.regExp ? "matching the regular expression" + this.regExp : "but is not."}`);
+        return [`The value \"${input}\" may only be a string ${this.regExp ? "matching the regular expression" + this.regExp : "but is not."}`];
     }
 }
 
@@ -79,7 +85,7 @@ export class BooleanAbstract {
     }
 
     error (input) {
-        alert(`The value ${input} may only be of type boolean but is not.`);
+        return [`The value \"${input}\" may only be of type boolean but is not.`];
     }
 }
 
@@ -87,6 +93,7 @@ export class ObjectAbstract {
     constructor (obj) {
         this.obj = obj;
         this.keyMissingError = false;
+        this.errorLog = [];
 
         this.name = "Object";
     }
@@ -95,13 +102,16 @@ export class ObjectAbstract {
         if (typeof input !== "object") return false;
 
         for (let key in this.obj) {
-            if (!(key in input || this.obj[key].IS_NULLABLE === true)) {
+            if (this.obj[key].IS_NULLABLE === true && !(key in input)) return true;
+
+            if (!(key in input)) {
                 this.keyMissingError = true;
                 return false;
             }
 
             if (!this.obj[key].validate(input[key])) {
-                this.obj[key].error(input[key]);
+                this.errorLog.push(`Error at "${key}":`);
+                this.errorLog.push(...this.obj[key].error(input[key]).map(str => tabChar + str));
                 return false;
             }
         }
@@ -111,8 +121,10 @@ export class ObjectAbstract {
 
     error (input) {
         if (this.keyMissingError) {
-            alert("The following object was missing at least one required key.\n" + JSON.stringify(input));
+            this.errorLog = ["This object was missing at least one required key.", ...this.errorLog];
         }
+
+        return this.errorLog;
     }
 }
 
@@ -129,28 +141,39 @@ export class Nullable {
     }
 
     error (input) {
-        this.subtype.error(input);
+        return this.subtype.error(input);
     }
 }
 
 export class Diverse {
     constructor (...types) {
         this.types = types;
+        this.internalErrors = [];
+        this.noneFound = false;
 
         this.name = "Diverse";
     }
 
     validate (input) {
         let anyPassed = false;
+
         for (let key in this.types) {
-            if (this.types[key].validate(input)) anyPassed = true;
+            if (anyPassed) continue;
+
+            if (this.types[key].validate(input)) {
+                anyPassed = true;
+                continue;
+            }
+
+            this.internalErrors.push(`Attempted using ${this.types[key].name}:`, ...this.types[key].error(input).map(str => tabChar + str));
         }
 
+        this.noneFound = !anyPassed;
         return anyPassed;
     }
 
     error (input) {
-        alert(`The value ${JSON.stringify(input)} may be of types ${this.types.map(type => type.name).join(",")} but is not.`);
+        return [`This value may a valid instance of types ${this.types.map(type => type.name).join(", ")} but is not.`, ...this.internalErrors];
     }
 }
 

@@ -12,9 +12,7 @@ export class Engine {
         this.frame_id = 0;
         this.frame_draws = 0;
 
-        //this.stats = document.querySelector("#stats");
-
-        this.PROJECTION_MATRIX = this.constructor.ORTHOGRAPHIC_PROJECTION_MATRIX;
+        this.PROJECTION_MATRIX = Engine.ORTHOGRAPHIC_PROJECTION_MATRIX;
     }
 
     static ORTHOGRAPHIC_PROJECTION_MATRIX = [
@@ -35,10 +33,6 @@ export class Engine {
     }
 
     update() {
-        //this.stats.innerHTML = `dt: ${Math.round(this.dt)} fps: ${Math.round(1000 / this.dt)} entities: ${this.scene.length} draws: ${this.frame_draws}`;
-
-        //this.scene[0].vertices = this.scene[0].vertices.map((vertex, i) => i < 8 ? Vector.scalar(vertex, 1.01) : vertex);
-
         for (let i = 0; i < this.scene.length; i++) {
             for (let j = 0; j < this.scene[i].scripts.length; j++) {
                 this.scene[i].scripts[j].update(this);
@@ -47,7 +41,7 @@ export class Engine {
     }
 
     render() {
-        this.display.clear("#000000");
+        this.display.clear();
         this.frame_draws = 0;
 
         for (let i = 0; i < this.scene.length; i++) {
@@ -62,7 +56,7 @@ export class Engine {
         entity.update();
 
         for (let i = 0; i < entity.coords.length; i++) {
-            entity.points[i] = Matrix.invertXY(Matrix.multiply(this.PROJECTION_MATRIX, entity.coords[i]))[0];
+            entity.points[i] = Matrix.multiply(this.PROJECTION_MATRIX, entity.coords[i])[0];
         }
 
         this.renderFaces(entity, id);
@@ -111,11 +105,7 @@ export class Engine {
     }
 }
 
-export class Scene extends Array {
-    constructor(scene, color = "#000000") {
-        super(...scene);
-        this.color = color;
-    }
+export class Scene {
 
     static async deserialize (json, errorDiv, errorP) {
         let deserializer = new Deserializer(json);
@@ -140,4 +130,3 @@ export class Scene extends Array {
         return JSON.stringify(json, null, spaces);
     }
 }
-

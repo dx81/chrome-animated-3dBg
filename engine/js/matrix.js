@@ -8,10 +8,10 @@ export default class Matrix extends Array {
     }
 
     static multiply(mat1, mat2, out = []) {
-        for (let x = 0; x < mat1[0].length; x++) {
+        for (let x = 0; x < mat2.length; x++) {
             out[x] = [];
-            for (let y = 0; y < mat2.length; y++) {
-                out[x][y] = Vector.dot(Matrix.sliceY(mat1, x), Matrix.sliceX(mat2, y));
+            for (let y = 0; y < mat1[0].length; y++) {
+                out[x][y] = Vector.dot(Matrix.sliceY(mat1, y), Matrix.sliceX(mat2, x));
             }
         }
         return out;

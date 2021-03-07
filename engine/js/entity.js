@@ -17,7 +17,6 @@ export default class Entity {
             vertices: [],
             edges: [],
             faces: [],
-            baseModel: undefined,
         };
     }
 
@@ -49,8 +48,8 @@ export default class Entity {
         this.coords = [];
         this.points = [];
 
-        return new Promise((resolve, reject) => {
-            this.importScripts(scripts).then(_ => {
+        return new Promise(resolve => {
+            this.importScripts(scripts).then(() => {
                 this.importShaders(this.renderer.shaderPath).then(resolve);
             });
         });
@@ -84,9 +83,9 @@ export default class Entity {
 
         for (let i = 0; i < this.geometry.vertices.length; i++) {
             let vertex = [ Vector.add(Vector.multiply(this.geometry.vertices[i], this.transform.scale), this.transform.offset) ];
-            vertex = Matrix.invertXY(Matrix.multiply(rotation_matrix_x, vertex));
-            vertex = Matrix.invertXY(Matrix.multiply(rotation_matrix_y, vertex));
-            vertex = Matrix.invertXY(Matrix.multiply(rotation_matrix_z, vertex));
+            vertex = Matrix.multiply(rotation_matrix_x, vertex);
+            vertex = Matrix.multiply(rotation_matrix_y, vertex);
+            vertex = Matrix.multiply(rotation_matrix_z, vertex);
             this.coords[i] = [ Vector.add(vertex[0], this.transform.position) ];
         }
     }

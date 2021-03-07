@@ -1,19 +1,31 @@
 // Oliver Kovacs 2020 - canvas.js
 
+import Vector from "./vector.js";
+
 export default class Canvas {
-    constructor(id, parent = "body", scale = [ 1, 1 ], size = [ 1200, 600 ], origin = [ 0, 0 ], bgColor = "#FFFFFF", fgColor = "#000000") {
+    constructor(id, scale = [ 1, 1 ], size = [ 1200, 600 ], origin = [ 0, 0 ], bgColor = "#FFFFFF", fgColor = "#000000") {
         this.canvas = document.querySelector(id);
         this.ctx = this.canvas.getContext("2d");
         this.ctx.lineWidth = 1;
         this.bgColor = bgColor;
         this.fgColor = fgColor;
         this.s = scale;
-        this.o = origin == "center" ? [ this.canvas.width / 2, this.canvas.height / 2 ] : origin;
+
+        if (origin === "center") {
+            window.addEventListener("resize", this.resize.bind(this));
+            return this.resize();
+        }
+        this.o = origin;
     }
 
     static Style = {
         fill: "fillStyle",
         stroke: "strokeStyle"
+    }
+
+    resize() {
+        this.o = Vector.scalar([ this.canvas.width, this.canvas.height ], 1/2);
+        return this;
     }
 
     clear(color = this.bgColor) {

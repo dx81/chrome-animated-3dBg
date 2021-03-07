@@ -4,6 +4,11 @@ import Geometry from "./js/geometry.js";
 import { Engine, Scene } from "./js/engine.js";
 import Entity from "./js/entity.js";
 
+const setCanvasSize = () => {
+    document.getElementById("main").width = window.innerWidth;
+    document.getElementById("main").height = window.innerHeight;
+};
+
 window.onload = () => {
     chrome.storage.sync.get("sceneData", (res) => {
         if (Object.keys(res).length === 0) {
@@ -14,23 +19,16 @@ window.onload = () => {
         ready(res.sceneData);
     })
 
-    document.getElementById("main").width = window.innerWidth;
-    document.getElementById("main").height = window.innerHeight;
+    setCanvasSize();
+    window.onresize = setCanvasSize;
 }
 
 const ready = async (json) => {
     //NOTE: entities are still empty, creation is not implemented
-    let entities = await Scene.deserialize(json, "errorDiv", "errorMessage");
+    let entities = await convert(json);
 
-    let display = new Canvas("#main", "", [ 1, 1 ], [ 1200, 600 ], "center").clear("#000000");
-
-    window.onresize = () => {
-        document.getElementById("main").width = window.innerWidth;
-        document.getElementById("main").height = window.innerHeight;
-        display.o = [ display.canvas.width / 2, display.canvas.height / 2 ];
-    }
-
-    let engine = new Engine(display, entities);
+    let display = new Canvas("#main", [ 1, 1 ], [], "center", "#000000", "#FFFFFF").clear();
+    let engine = new Engine(display, []);
 
     //engine.scene.push(new Entity({ scale: [ 100, 100, 100 ] }, Geometry.DODECAHEDRON, { renderFaces: 1 }));
 
@@ -40,7 +38,9 @@ const ready = async (json) => {
 
     /*let geometry = { ...Geometry.CUBE, faces: Geometry.cube_faces_triangles }
 
+    let geometry = { ...Geometry.CUBE, faces: Geometry.cube_faces_triangles }
     let path = "spin.js"; let args = [ [ 1, 1/3, 0 ] ];
+
     engine.scene.push(await new Entity({ position: [ 0, 0, 0 ], scale: [ 100, 100, 100 ] }, geometry, { shaderPath: "rgb.js" }, [ { path, args } ]));
     engine.scene.push(await new Entity({ position: [ 0, 100, 0 ], scale: [ 100, 100, 100 ] }, geometry, { shaderPath: "rgb.js" }, [ { path, args } ]));
     engine.scene.push(await new Entity({ position: [ 0, -100, 0 ], scale: [ 100, 100, 100 ] }, geometry, { shaderPath: "rgb.js" }, [ { path, args } ]));

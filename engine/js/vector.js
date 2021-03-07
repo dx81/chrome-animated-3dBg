@@ -67,9 +67,9 @@ export default class Vector extends Array {
         return out;
     }
 
-    static scalar(vec1, scalar, out = []) {
-        for (let i = 0; i < vec1.length; i++) {
-            out[i] = vec1[i] * scalar;
+    static scalar(vec, scalar, out = []) {
+        for (let i = 0; i < vec.length; i++) {
+            out[i] = vec[i] * scalar;
         }
         return out;
     }

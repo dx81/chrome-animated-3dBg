@@ -1,5 +1,6 @@
 import Matrix from "./matrix.js";
 import Vector from "./vector.js";
+import Geometry from "./geometry.js";
 
 export default class Entity {
 
@@ -40,6 +41,7 @@ export default class Entity {
     static shaderTypes = [ "vertexShader", "edgeShader", "faceShader" ];
 
     constructor(transform, geometry, renderer, scripts = [], meta) {
+        if (typeof geometry === "string") geometry = Geometry[geometry] || Geometry.EMPTY;
         this.transform = { ...Entity.transform(), ...transform };
         this.geometry = { ...Entity.geometry(), ...geometry };
         this.renderer = { ...Entity.renderer(), ...renderer };

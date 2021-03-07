@@ -2,6 +2,15 @@
 
 export default class Geometry {
 
+    static EMPTY = {
+        
+        vertices: [],
+
+        edges: [],
+
+        faces: [],
+    };
+
     static TETRAHEDRON = {
 
         vertices: [

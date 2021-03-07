@@ -47,7 +47,7 @@ export class Engine {
 
         for (let i = 0; i < this.scene.length; i++) {
             for (let j = 0; j < this.scene[i].scripts.length; j++) {
-                this.scene[i].scripts[j].update(this);
+                this.scene[i].scripts[j].update(this, i, j);
             }
         }
     }

@@ -4,16 +4,16 @@ import Geometry from "./geometry.js";
 
 export default class Entity {
 
-    static transform() {
+    static get transform() {
         return {
             position: [ 0, 0, 0 ],
             rotation: [ 0, 0, 0 ],
-            scale: [ 1, 1, 1 ],
+            scale: [ 100, 100, 100 ],
             offset: [ 0, 0, 0 ],
         };
     }
 
-    static geometry() {
+    static get geometry() {
         return {
             vertices: [],
             edges: [],
@@ -21,7 +21,7 @@ export default class Entity {
         };
     }
 
-    static renderer() {
+    static get renderer() {
         return {
             vertexShader: () => "#FFFFFF",
             edgeShader: () => "#FFFFFF",
@@ -36,15 +36,15 @@ export default class Entity {
             useShaders: true,
             shaderPath: {},
         };
-    };
+    }
 
     static shaderTypes = [ "vertexShader", "edgeShader", "faceShader" ];
 
     constructor(transform, geometry, renderer, scripts = [], meta) {
-        if (typeof geometry === "string") geometry = Geometry[geometry] || Geometry.EMPTY;
-        this.transform = { ...Entity.transform(), ...transform };
-        this.geometry = { ...Entity.geometry(), ...geometry };
-        this.renderer = { ...Entity.renderer(), ...renderer };
+        if (typeof geometry === "string") geometry = Geometry[geometry.toUpperCase()] || Geometry.EMPTY;
+        this.transform = { ...Entity.transform, ...transform };
+        this.geometry = { ...Entity.geometry, ...geometry };
+        this.renderer = { ...Entity.renderer, ...renderer };
         this.scripts = [];
         this.meta = meta;
         this.coords = [];

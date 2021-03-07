@@ -117,8 +117,16 @@ export class Scene extends Array {
         this.color = color;
     }
 
-    static async deserialize (json) {
+    static async deserialize (json, errorDiv, errorP) {
+        let deserializer = new Deserializer(json);
 
+        let valid = deserializer.validate();
+        if (valid !== true) {
+            document.getElementById(errorDiv).style.display = "block";
+            document.getElementById(errorP).innerHTML = valid;
+        }
+
+        return await deserializer.generate();
     }
 
     static serialize(scene, spaces = 0) {

@@ -128,6 +128,20 @@ export class ObjectAbstract {
     }
 }
 
+export class AnyAbstract {
+    constructor () {
+        this.name = "Any";
+    }
+
+    validate (input) {
+        return true;
+    }
+
+    error () {
+        return ["You shouldn't be seeing this error"];
+    }
+}
+
 export class Nullable {
     constructor (subtype) {
         this.IS_NULLABLE = true;

@@ -4,7 +4,7 @@ export class ArrayAbstract {
     constructor (size, type) {
         this.size = size;
         this.type = type;
-        this.interalErrors = [];
+        this.internalErrors = [];
 
         this.name = "Array";
     }
@@ -12,7 +12,7 @@ export class ArrayAbstract {
     validate (input) {
         if (!Array.isArray (input)) return false;
         if (this.size !== null && input.length !== this.size) {
-            this.interalErrors.push("Array is of wrong length.");
+            this.internalErrors.push("Array is of wrong length.");
             return false;
         }
 
@@ -20,13 +20,13 @@ export class ArrayAbstract {
             if (failed) return true;
             if (this.type.validate(val)) return false;
 
-            this.interalErrors.push("Error at index " + index + ":", ...this.type.error(val).map(str => tabChar + str))
+            this.internalErrors.push("Error at index " + index + ":", ...this.type.error(val).map(str => tabChar + str))
             return true;
         }, false);
     }
 
     error (input) {
-        return [`This value may only be an array of ${this.type.name} ${this.size !== null ? "(with length " + this.size + ") " : ""}but is not.`, ...this.interalErrors];
+        return [`This value may only be an array of ${this.type.name} ${this.size !== null ? "(with length " + this.size + ") " : ""}but is not.`, ...this.internalErrors];
     }
 }
 

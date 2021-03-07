@@ -39,7 +39,7 @@ export default class Entity {
 
     static shaderTypes = [ "vertexShader", "edgeShader", "faceShader" ];
 
-    constructor(transform, geometry, renderer, scripts, meta) {
+    constructor(transform, geometry, renderer, scripts = [], meta) {
         this.transform = { ...Entity.transform(), ...transform };
         this.geometry = { ...Entity.geometry(), ...geometry };
         this.renderer = { ...Entity.renderer(), ...renderer };

@@ -1,4 +1,5 @@
-export const vertexShader = (engine, entity_id, vertex_id) => {
+export function vertexShader(engine, entity_id, vertex_id) {
+    if (!this.renderer.useShaders) return this.renderer.vertexColor;
     let ms = Date.now();
     let speed = 0.002;
     let [ r, g, b ] = [
@@ -9,7 +10,8 @@ export const vertexShader = (engine, entity_id, vertex_id) => {
     return engine.toHexColor(r, g, b);
 }
 
-export const edgeShader = (engine, entity_id, edge_id) => {
+export function edgeShader (engine, entity_id, edge_id) {
+    if (!this.renderer.useShaders) return this.renderer.edgeColor;
     let ms = Date.now();
     let speed = 0.01;
     let [ r, g, b ] = [
@@ -20,7 +22,8 @@ export const edgeShader = (engine, entity_id, edge_id) => {
     return engine.toHexColor(r, g, b);
 }
 
-export const faceShader = (engine, entity_id, face_id) => {
+export function faceShader (engine, entity_id, face_id) {
+    if (!this.renderer.useShaders) return this.renderer.faceColor;
     let ms = Date.now();
     let speed = 0.005;
     let [ r, g, b ] = [

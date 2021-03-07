@@ -17,11 +17,11 @@ export class Engine {
         this.PROJECTION_MATRIX = this.constructor.ORTHOGRAPHIC_PROJECTION_MATRIX;
     }
 
-    static ORTHOGRAPHIC_PROJECTION_MATRIX = new Matrix(...[
+    static ORTHOGRAPHIC_PROJECTION_MATRIX = [
         [ 1, 0 ],
         [ 0, 1 ],
         [ 0, 0 ]
-    ]);
+    ];
 
     loop (ts) {
         window.requestAnimationFrame(ts => this.loop(ts));

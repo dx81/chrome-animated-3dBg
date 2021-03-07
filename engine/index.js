@@ -31,9 +31,9 @@ const ready = async (json) => {
 
     //engine.scene.push(new Entity({ scale: [ 100, 100, 100 ] }, Geometry.DODECAHEDRON, { renderFaces: 1 }));
 
-    engine.scene.push(await new Entity({ position: [ 100, 0, 0 ], rotation: [ Math.PI / 4, 0, 0 ], scale: [ 100, 100, 100 ] }, Geometry.CUBE, { shaderPath: "./shaders/rgb.js" }, [ "./scripts/spin.js" ]));
-    engine.scene.push(await new Entity({ position: [ 0, 100, 0 ], rotation: [ 0, Math.PI / 4, 0 ], scale: [ 100, 100, 100 ] }, Geometry.CUBE, { shaderPath: "./shaders/rgb.js" }, [ "./scripts/spin.js" ]));
-    engine.scene.push(await new Entity({ position: [ 0, 0, 100 ], rotation: [ 0, 0, Math.PI / 4 ], scale: [ 100, 100, 100 ] }, Geometry.CUBE, { shaderPath: "./shaders/rgb.js" }, [ "./scripts/spin.js" ]));
+    engine.scene.push(await new Entity({ position: [ 100, 0, 0 ], rotation: [ Math.PI / 4, 0, 0 ], scale: [ 100, 100, 100 ] }, Geometry.CUBE, { useShaders: 1, shaderPath: "rgb.js" }, [ "spin.js" ]));
+    engine.scene.push(await new Entity({ position: [ 0, 100, 0 ], rotation: [ 0, Math.PI / 4, 0 ], scale: [ 100, 100, 100 ] }, Geometry.CUBE, { useShaders: 1, shaderPath: "rgb.js" }, [ "spin.js" ]));
+    engine.scene.push(await new Entity({ position: [ 0, 0, 100 ], rotation: [ 0, 0, Math.PI / 4 ], scale: [ 100, 100, 100 ] }, Geometry.CUBE, { useShaders: 1, shaderPath: "rgb.js" }, [ "spin.js" ]));
 
     console.log(JSON.stringify(engine.scene[0], null, 4))
     engine.loop(0);

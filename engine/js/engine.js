@@ -3,14 +3,21 @@
 import Matrix from "./matrix.js";
 import Deserializer from "./deserialize.js";
 
+Math.roundn = (number, n) => {
+    let x = Math.pow(10, n);
+    return Math.round(x * number) / x;
+}
+
 export class Engine {
-    constructor(display, scene) {
+    constructor(display, scene, stats) {
         this.display = display;
         this.scene = scene;
 
         this.ms = 0;
         this.frame_id = 0;
         this.frame_draws = 0;
+
+        this.stats = document.querySelector(`#${stats}`);
 
         this.PROJECTION_MATRIX = Engine.ORTHOGRAPHIC_PROJECTION_MATRIX;
     }
@@ -33,6 +40,11 @@ export class Engine {
     }
 
     update() {
+        this.fps = 1000 / this.dt;
+        this.stats.innerHTML = `fps: ${Math.roundn(this.fps, 2)} dt: ${Math.roundn(this.dt, 2)}<br/>` + 
+        `entities: ${this.scene.length} draws: ${this.frame_draws}<br/>` + 
+        `sec: ${Math.round(this.ms / 1000)} frame: ${this.frame_id}<br/>`;
+
         for (let i = 0; i < this.scene.length; i++) {
             for (let j = 0; j < this.scene[i].scripts.length; j++) {
                 this.scene[i].scripts[j].update(this);
@@ -67,7 +79,7 @@ export class Engine {
     renderVertices(entity, entity_id) {
         if (!entity.renderer.renderVertices) return;
         for (let i = 0; i < entity.points.length; i++) {
-            this.display.circle(entity.points[i], 3, entity.renderer.vertexShader(this, entity_id, i), "fill");
+            this.display.circle(entity.points[i], 1, entity.renderer.vertexShader(this, entity_id, i), "fill");
             this.frame_draws++;
         }
     }

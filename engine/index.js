@@ -25,10 +25,10 @@ window.onload = () => {
 
 const ready = async (json) => {
     //NOTE: entities are still empty, creation is not implemented
-    let entities = await convert(json);
+    let entities = await Scene.deserialize(json, "errorDiv", "errorMessage");
 
     let display = new Canvas("#main", [ 1, 1 ], [], "center", "#000000", "#FFFFFF").clear();
-    let engine = new Engine(display, []);
+    let engine = new Engine(display, entities);
 
     //engine.scene.push(new Entity({ scale: [ 100, 100, 100 ] }, Geometry.DODECAHEDRON, { renderFaces: 1 }));
 

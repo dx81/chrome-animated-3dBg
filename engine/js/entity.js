@@ -18,9 +18,9 @@ export default class Entity {
     };
 
     static renderer = {
-        vertexShader: () => { },
-        edgeShader: () => { },
-        faceShader: () => { },
+        vertexShader: () => "#FFFFFF",
+        edgeShader: () => "#FFFFFF",
+        faceShader: () => "#FFFFFF",
         vertexColor: "#FFFFFF",
         edgeColor: "#FFFFFF",
         faceColor: "#FFFFFF",
@@ -29,15 +29,35 @@ export default class Entity {
         renderEdges: true,
         renderFaces: true,
         useShaders: true,
+        shaderPath: undefined,
     };
 
-    constructor(transform, geometry, renderer, meta) {
+    constructor(transform, geometry, renderer, scripts, meta) {
         this.transform = { ...Entity.transform, ...transform };
         this.geometry = { ...Entity.geometry, ...geometry };
         this.renderer = { ...Entity.renderer, ...renderer };
+        this.scripts = [];
         this.meta = meta;
         this.coords = [];
         this.points = [];
+
+        return new Promise((resolve, reject) => {
+            this.importScripts(scripts).then(_ => {
+                if (!renderer.shaderPath) {
+                    resolve(this);
+                }
+                if (typeof renderer.shaderPath == "string") {
+                    renderer.shaderPath = {
+                        vertexShader: renderer.shaderPath,
+                        edgeShader: renderer.shaderPath,
+                        faceShader: renderer.shaderPath,
+                    }
+                }
+                this.importShaders(renderer.shaderPath).then(_ => {
+                    resolve(this);
+                });
+            });
+        });
     }
 
     update() {
@@ -73,5 +93,22 @@ export default class Entity {
             vertex = Matrix.invertXY(Matrix.multiply(rotation_matrix_z, vertex));
             this.coords[i] = [ Vector.add(vertex[0], this.transform.position) ];
         }
+    }
+
+    async importScripts(sources) {
+        await Promise.all(sources.map(async (path, i) => {
+            let script = await import(path);
+            let assign = {}
+            for (let key in script) {
+                assign[key] = script[key].bind(this);
+            }
+            this.scripts[i] = { ...assign, path };
+        }));
+    }
+
+    async importShaders(path) {
+        await Promise.all(Object.entries(path).map(async ([ shader, shaderPath ]) => {
+            this.renderer[shader] = (await import(shaderPath))[shader];
+        }));
     }
 }

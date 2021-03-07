@@ -40,8 +40,9 @@ export class Engine {
         //this.scene[0].vertices = this.scene[0].vertices.map((vertex, i) => i < 8 ? Vector.scalar(vertex, 1.01) : vertex);
 
         for (let i = 0; i < this.scene.length; i++) {
-            this.scene[i].transform.rotation[0] += this.dt / 1000;
-            this.scene[i].transform.rotation[1] += this.dt / 3000;
+            for (let j = 0; j < this.scene[i].scripts.length; j++) {
+                this.scene[i].scripts[j].update(this);
+            }
         }
     }
 

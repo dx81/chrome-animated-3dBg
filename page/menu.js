@@ -1,8 +1,11 @@
+import mapToButtons from "./scenePresets";
+
 const mapFn = (obj) => {
     for (let key in obj) {
         document.getElementById(key).addEventListener(obj[key][0], obj[key][1]);
     }
 }
+
 document.addEventListener('DOMContentLoaded', function() {
     mapFn({
         openButton : ["click", menu.open],
@@ -15,6 +18,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     JSONManagement.setupDownload();
+    mapToButtons();
 });
 
 //---------------- actual functions

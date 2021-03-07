@@ -3,8 +3,6 @@ import { Diverse, Nullable, StringAbstract, NumberAbstract, ArrayAbstract, Boole
 
 const newLineChar = "<br/>";
 
-//TODO: implement paths for scripts, shaders, geometry, etc.
-
 const layout2 = new ArrayAbstract(null,
     new ObjectAbstract({
         transform : new ObjectAbstract({

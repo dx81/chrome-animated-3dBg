@@ -399,13 +399,18 @@ export default class Geometry {
         return out;
     })();
 
-    static construct_regular_convex(vertex_count, radius = 1, phase = 0) {
-        let out = [];
+    static regular_convex_polygon(vertex_count, radius = 1, phase = 0) {
+        let vertices = [];
+        let edges = [];
+        let faces = [ [] ];
         for (let i = 0; i < vertex_count; i++) {
             let theta = i * 2 * Math.PI / vertex_count + phase;
-            out[i] = [ radius * Math.cos(theta), radius * Math.sin(theta) ];
+            vertices[i] = [ radius * Math.cos(theta), radius * Math.sin(theta), 0 ];
+            edges[i] = [ i, (i + 1) % vertex_count];
+            faces[0][i] = i;
         }
-        return out;
+
+        return { vertices, edges, faces };
     }
 
     static octahedron_type_edges(vertex_count) {

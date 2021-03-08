@@ -17,6 +17,16 @@ export default class Matrix extends Array {
         return out;
     }
 
+    static scalar(mat, scalar, out = []) {
+        for (let x = 0; x < mat.length; x++) {
+            out[x] = [];
+            for (let y = 0; y < mat[0].length; y++) {
+                out[x][y] = mat[x][y] * scalar;
+            }
+        }
+        return out;
+    }
+
     static sliceX(mat, x) {
         return mat[x];
     }

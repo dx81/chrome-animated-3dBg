@@ -1,5 +1,7 @@
 // Oliver Kovacs 2021 - geometry.js
 
+import Matrix from "./matrix.js";
+
 export default class Geometry {
 
     static get EMPTY() {
@@ -80,14 +82,14 @@ export default class Geometry {
 
     static get OCTAHEDRON() {
         return {
-            vertices: [
+            vertices: Matrix.scalar([
                 [    0,    0, -0.7072 ],
                 [    0,    0,  0.7072 ],
                 [ -0.5, -0.5,       0 ],
                 [  0.5, -0.5,       0 ],
                 [  0.5,  0.5,       0 ],
                 [ -0.5,  0.5,       0 ],
-            ],
+            ], 0.5 / 0.7072),
     
             edges: [
                 [ 2, 3 ],
@@ -119,7 +121,7 @@ export default class Geometry {
 
     static get DODECAHEDRON() {
         return {
-            vertices: [
+            vertices: Matrix.scalar([
                 [     -1,     -1,     -1 ],
                 [      1,     -1,     -1 ],
                 [     -1,      1,     -1 ],
@@ -140,7 +142,7 @@ export default class Geometry {
                 [  1.618, -0.618,      0 ],
                 [ -1.618,  0.618,      0 ],
                 [  1.618,  0.618,      0 ],
-            ],
+            ],  0.5 / 1.618),
     
             edges: [
                 [   8, 10 ],
@@ -209,12 +211,118 @@ export default class Geometry {
 
     static get ICOSAHEDRON() {
         return {
-            vertices: [],
 
-            edges: [],
+            vertices: Matrix.scalar([
+                [      0,     -1, -1.618 ],
+                [      0,      1, -1.618 ],
+                [      0,     -1,  1.618 ],
+                [      0,      1,  1.618 ],
+                [ -1.618,      0,     -1 ],
+                [ -1.618,      0,      1 ],
+                [  1.618,      0,     -1 ],
+                [  1.618,      0,      1 ],
+                [     -1, -1.618,      0 ],
+                [      1, -1.618,      0 ],
+                [     -1,  1.618,      0 ],
+                [      1,  1.618,      0 ],
+            ], 0.5 / 1.618),
 
-            faces: [],
+            edges: [
+                [  0,  1 ],
+                [  2,  3 ],
+                [  4,  5 ],
+                [  6,  7 ],
+                [  8,  9 ],
+                [ 10, 11 ],
+
+                [ 0,  8 ],
+                [ 0,  9 ],
+                [ 1, 10 ],
+                [ 1, 11 ],
+
+                [ 2,  8 ],
+                [ 2,  9 ],
+                [ 3, 10 ],
+                [ 3, 11 ],
+
+                [ 4, 0 ],
+                [ 4, 1 ],
+                [ 5, 2 ],
+                [ 5, 3 ],
+
+                [ 6, 0 ],
+                [ 6, 1 ],
+                [ 7, 2 ],
+                [ 7, 3 ],
+
+                [ 8, 4 ],
+                [ 8, 5 ],
+                [ 9, 6 ],
+                [ 9, 7 ],
+
+                [ 10, 4 ],
+                [ 10, 5 ],
+                [ 11, 6 ],
+                [ 11, 7 ],
+            ],
+
+            faces: [
+                [ 0, 4, 8 ],
+                [ 0, 6, 9 ],
+                [ 3, 7, 11 ],
+                [ 3, 5, 10 ],
+
+                [ 1, 4, 10 ],
+                [ 1, 6, 11 ],
+                [ 2, 7,  9 ],
+                [ 2, 5,  8 ],
+
+                [ 0,  8,  9 ],
+                [ 2,  8,  9 ],
+                [ 1, 10, 11 ],
+                [ 3, 10, 11 ],
+
+                [ 4, 0, 1 ],
+                [ 6, 0, 1 ],
+                [ 5, 2, 3 ],
+                [ 7, 2, 3 ],
+
+                [  8, 4, 5 ],
+                [ 10, 4, 5 ],
+                [  9, 6, 7 ],
+                [ 11, 6, 7 ],
+            ],
         };
+    }
+
+    static get cube_faces_triangles() {
+        return [
+            [ 0, 1, 3 ],
+            [ 4, 5, 7 ],
+            [ 0, 1, 4 ],
+            [ 1, 2, 5 ],
+            [ 2, 3, 6 ],
+            [ 3, 0, 7 ],
+        ];
+    }
+
+    static get dodecahedron_faces_cube() {
+        return [
+            [ 0, 1, 3, 2 ],
+            [ 4, 5, 7, 6 ],
+            [ 0, 1, 5, 4 ],
+            [ 1, 3, 7, 5 ],
+            [ 3, 2, 6, 7 ],
+            [ 2, 0, 4, 6 ],
+        ];
+    }
+
+    static get icosahedron_faces_rectangles() {
+        return [
+            [ 0, 1,  3,  2 ],
+            [ 4, 5,  7,  6 ],
+            [ 8, 9, 11, 10 ],
+        ];
     }
 
     static addVertexToEdge(geometry, vertex, edge) {
@@ -278,7 +386,7 @@ export default class Geometry {
             vertices: geometry.vertices,
             edges: [ ...geometry.edges, ...edges ],
             faces: geometry.faces,
-        }
+        };
     }
 
     static CUBOID_Faces = (() => {
@@ -289,11 +397,6 @@ export default class Geometry {
             out.push([ i, (i + 1) % 4, ((i + 1) % 4) + 4, i + 4 ]);
         });
         return out;
-    })();
-
-    static cube_faces_triangles = (() => {
-        //return this.CUBOID_Faces.map(face => [ face [0], face[1] , face[3], face[2] ]);
-        return this.CUBE.faces.map(face => [ face [0], face[1] , face[3] ]);
     })();
 
     static construct_regular_convex(vertex_count, radius = 1, phase = 0) {
@@ -369,3 +472,22 @@ export default class Geometry {
 //    Geometry.DODECAHEDRON.Edge[i * 2] = [ 3 * 4 + i, 3 * 4 + i + 1 ];
 //    Geometry.DODECAHEDRON.Edge[i * 3] = [ 4 * 4 + i, 4 * 4 + i + 1 ];
 //}
+
+//console.log((() => {
+//    const out = []
+//    const phi = (1 + Math.sqrt(5)) / 2;
+//
+//    let base = Array.from({ length: 4 }, (_, i) => [ 0, 2 * (i % 2) - 1, (2 * Math.floor(i / 2) - 1) * phi ]);
+//    base.forEach(([ x, y, z ], i) => {
+//        console.log(x, y, z, i)
+//        out[i + 0 * 4] = [ x, y, z ];
+//        out[i + 1 * 4] = [ z, x, y ];
+//        out[i + 2 * 4] = [ y, z, x ];
+//    });
+//    console.log(out)
+//    return out;
+//})())
+
+// cube faces triangles
+//return this.CUBOID_Faces.map(face => [ face [0], face[1] , face[3], face[2] ]);
+//return this.CUBE.faces.map(face => [ face [0], face[1] , face[3] ]);

@@ -2,14 +2,8 @@ import mapToButtons from "./scenePresets.js";
 import JSONManagement from "./jsonManagement.js";
 import {menu, errorBoxClose, debugBox} from "./diverseFunctions.js"
 
-const mapFn = (obj) => {
-    for (let key in obj) {
-        document.getElementById(key).addEventListener(obj[key][0], obj[key][1]);
-    }
-}
-
 document.addEventListener('DOMContentLoaded', function() {
-    mapFn({
+    let DOMBindings = {
         openButton : ["click", menu.open],
         closeButton : ["click", menu.close],
 
@@ -18,7 +12,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
         errorCloseButton : ["click", errorBoxClose],
         showDebugInfo : ["click", debugBox.setValue]
-    });
+    }
+
+    for (let key in DOMBindings) {
+        document.getElementById(key).addEventListener(DOMBindings[key][0], DOMBindings[key][1]);
+    }
 
     JSONManagement.setupDownload();
     debugBox.loadValue();

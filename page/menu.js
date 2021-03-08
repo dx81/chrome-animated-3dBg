@@ -49,7 +49,7 @@ const JSONManagement = {
         fileReader.readAsText(file);
     },
     clearHandler : () => {
-        chrome.storage.sync.remove("sceneData", () => {
+        chrome.storage.local.remove("sceneData", () => {
             location.reload();
         })
     },
@@ -65,12 +65,12 @@ const JSONManagement = {
         }
 
         console.log(jsonData);
-        chrome.storage.sync.set({sceneData : jsonData}, () => {
+        chrome.storage.local.set({sceneData : jsonData}, () => {
             location.reload();
         });
     },
     setupDownload : () => {
-        chrome.storage.sync.get("sceneData", res => {
+        chrome.storage.local.get("sceneData", res => {
             if ("sceneData" in res) res = res.sceneData;
 
             document.getElementById("downloadButtonWrapper").setAttribute("href", `data:text/plain;charset=utf-8,${encodeURIComponent(JSON.stringify(res))}`);
@@ -84,12 +84,12 @@ const errorBoxClose = () => {
 
 const debugBox = {
     setValue : (ev) => {
-        chrome.storage.sync.set ({showDebug: ev.target.checked}, () => {
+        chrome.storage.local.set ({showDebug: ev.target.checked}, () => {
             location.reload ();
         })
     },
     loadValue : () => {
-        chrome.storage.sync.get("showDebug", (res) => {
+        chrome.storage.local.get("showDebug", (res) => {
             if (res.showDebug) {
                 document.getElementById("showDebugInfo").checked = res.showDebug;
             }

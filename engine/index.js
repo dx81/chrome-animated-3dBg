@@ -11,9 +11,9 @@ const setCanvasSize = () => {
 
 window.onload = async () => {
     let drawDebug = await new Promise((resolve) => {
-        chrome.storage.sync.get("showDebug", (res) => {
+        chrome.storage.local.get("showDebug", (res) => {
             if (Object.keys(res).length === 0) {
-                chrome.storage.sync.set({showDebug : false});
+                chrome.storage.local.set({showDebug : false});
                 res = false;
             }
 
@@ -21,7 +21,9 @@ window.onload = async () => {
         });
     });
 
-    chrome.storage.sync.get("sceneData", (res) => {
+    chrome.storage.local.get("sceneData", (res) => {
+        console.log(res);
+
         if (Object.keys(res).length === 0) {
             ready(defaultJSON, drawDebug);
             return;
@@ -35,7 +37,6 @@ window.onload = async () => {
 }
 
 const ready = async (json, drawDebug) => {
-    console.log(drawDebug);
     let entities = await Scene.deserialize(json, "errorDiv", "errorMessage");
 
     let display = new Canvas("#main", [ 1, 1 ], [], "center", "#000000", "#FFFFFF").clear();

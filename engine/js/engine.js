@@ -17,7 +17,7 @@ export class Engine {
         this.frame_id = 0;
         this.frame_draws = 0;
 
-        this.stats = document.querySelector(`#${stats}`);
+        this.stats = stats ? document.querySelector(`#${stats}`) : false;
 
         this.PROJECTION_MATRIX = Engine.ORTHOGRAPHIC_PROJECTION_MATRIX;
     }
@@ -40,16 +40,17 @@ export class Engine {
     }
 
     update() {
-        this.fps = 1000 / this.dt;
-        this.stats.innerHTML = `fps: ${Math.roundn(this.fps, 2)} dt: ${Math.roundn(this.dt, 2)}<br/>` + 
-        `entities: ${this.scene.length} draws: ${this.frame_draws}<br/>` + 
-        `sec: ${Math.round(this.ms / 1000)} frame: ${this.frame_id}<br/>`;
-
         for (let i = 0; i < this.scene.length; i++) {
             for (let j = 0; j < this.scene[i].scripts.length; j++) {
                 this.scene[i].scripts[j].update(this, i, j);
             }
         }
+
+        if (!this.stats) return;
+        this.fps = 1000 / this.dt;
+        this.stats.innerHTML = `fps: ${Math.roundn(this.fps, 2)} dt: ${Math.roundn(this.dt, 2)}<br/>` +
+            `entities: ${this.scene.length} draws: ${this.frame_draws}<br/>` +
+            `sec: ${Math.round(this.ms / 1000)} frame: ${this.frame_id}<br/>`;
     }
 
     render() {

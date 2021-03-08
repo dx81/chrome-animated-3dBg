@@ -14,10 +14,12 @@ document.addEventListener('DOMContentLoaded', function() {
         uploadButton : ["change", JSONManagement.uploadHandler],
         clearButton : ["click", JSONManagement.clearHandler],
 
-        errorCloseButton : ["click", errorBoxClose]
+        errorCloseButton : ["click", errorBoxClose],
+        showDebugInfo : ["click", debugBox.setValue]
     });
 
     JSONManagement.setupDownload();
+    debugBox.loadValue();
     mapToButtons();
 });
 
@@ -78,4 +80,19 @@ const JSONManagement = {
 
 const errorBoxClose = () => {
     document.getElementById("errorDiv").style.display = "none";
+}
+
+const debugBox = {
+    setValue : (ev) => {
+        chrome.storage.sync.set ({showDebug: ev.target.checked}, () => {
+            location.reload ();
+        })
+    },
+    loadValue : () => {
+        chrome.storage.sync.get("showDebug", (res) => {
+            if (res.showDebug) {
+                document.getElementById("showDebugInfo").checked = res.showDebug;
+            }
+        })
+    }
 }

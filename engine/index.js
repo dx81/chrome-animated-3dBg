@@ -1,8 +1,6 @@
 import defaultJSON from "./defaultJSON.js"
 import Canvas from "./js/canvas.js";
 import { Engine, Scene } from "./js/engine.js";
-import Entity from "./js/entity.js";
-import Geometry from "./js/geometry.js";
 
 const setCanvasSize = () => {
     document.getElementById("main").width = window.innerWidth;

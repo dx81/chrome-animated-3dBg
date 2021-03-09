@@ -26,7 +26,7 @@ export class ArrayAbstract {
     }
 
     error (input) {
-        return [`This value may only be an array of ${this.type.name} ${this.size !== null ? "(with length " + this.size + ") " : ""}but is not.`, ...this.internalErrors];
+        return [`This value may only be an array of ${this.type.name} ${this.size !== null ? "(with length " + this.size + ") " : ""}but is not or has errors.`, ...this.internalErrors];
     }
 }
 
@@ -100,6 +100,13 @@ export class ObjectAbstract {
 
     validate (input) {
         if (typeof input !== "object") return false;
+
+        for (let key in input) {
+            if (!(key in this.obj)) {
+                this.errorLog.push(`Key error: did not expect key "${key}". Please remove.`);
+                return false;
+            }
+        }
 
         for (let key in this.obj) {
             if (this.obj[key].IS_NULLABLE === true && !(key in input)) return true;

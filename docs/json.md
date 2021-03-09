@@ -8,7 +8,7 @@ If you aren't familiar with JSON, please inform yourself first, as this layout i
 Note: Comments are _not_ a feature of JSON and are only used here to annotate
 Note: Values used here are demonstrative.
 
-```json
+```json5
 // The main exported element is an array of Objects
 [
   //Each object represents an entity in the scene, 

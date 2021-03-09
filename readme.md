@@ -18,18 +18,18 @@
 
 > _insert chrome webstore link_
 
-If you're interested in modifying more aspects of the scene, see the [docs](https://github.com/dx81/chrome-animated-3dBg/docs/internals.md).
+If you're interested in modifying more aspects of the scene, see the [docs](https://github.com/dx81/chrome-animated-3dBg/blob/master/docs/internals.md).
 
 ### Using the extension
 
 _insert screenshot of settings @ publication date here_
 
-The extension is controlled completely by the settings menu (except [internal aspects](https://github.com/dx81/chrome-animated-3dBg/docs/internals.md)), 
+The extension is controlled completely by the settings menu (except [internal aspects](https://github.com/dx81/chrome-animated-3dBg/blob/master/docs/internals.md)), 
 which allows you to choose from different presents or to define completely custom scenes, and even custom polygons.
 
 As seen above, the settings menu has a few different functionalities:  
 
-- Uploading a new JSON file to render. This will overwrite the current scene, and stay until something is changed manually. See the documentation for the JSON [here](https://github.com/dx81/chrome-animated-3dBg/docs/json.md)
+- Uploading a new JSON file to render. This will overwrite the current scene, and stay until something is changed manually. See the documentation for the JSON [here](https://github.com/dx81/chrome-animated-3dBg/blob/master/docs/json.md)
 - Downloading the currently used JSON data. Either pre-made scenes or your own data will be returned to you in a JSON file as a download.
 - Clearing the currently loaded JSON. This will reset the scene to the default cube.
 - Show debug information. Enabling this will show FPS rates and other info in the top right corner.

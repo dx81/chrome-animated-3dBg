@@ -32,10 +32,10 @@ _insert demos of finished engine_
 
 ### Developers
 
--> Ulrich Barnstedt  -  [[Email]](mailto:0x81.dev@gmail.com) [[Github]](https://github.com/ulrich-barnstedt)
+🡒 Ulrich Barnstedt  -  [[Email]](mailto:0x81.dev@gmail.com) [[Github]](https://github.com/ulrich-barnstedt)
 
 > UI Development & User Interfaces, Input & Validation, Publishing & Deployment
 
--> Oliver Kovacs  -  [[Email]](mailto:oliver.kovacs.dev@gmail.com) [[Github]](https://github.com/OliverKovacs)
+🡒 Oliver Kovacs  -  [[Email]](mailto:oliver.kovacs.dev@gmail.com) [[Github]](https://github.com/OliverKovacs)
 
 > Render Engine Development, 2D Canvas Projection

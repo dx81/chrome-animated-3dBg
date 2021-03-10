@@ -32,6 +32,7 @@ export class Engine {
         window.requestAnimationFrame(ts => this.loop(ts));
         this.dt = (ts - this.ms);
         this.ms = ts;
+        this.now = Date.now();
 
         this.frame_id++;
 
@@ -80,7 +81,7 @@ export class Engine {
     renderVertices(entity, entity_id) {
         if (!entity.renderer.renderVertices) return;
         for (let i = 0; i < entity.points.length; i++) {
-            this.display.circle(entity.points[i], 1, entity.renderer.vertexShader(this, entity_id, i), "fill");
+            this.display.circle(entity.points[i], 4, entity.renderer.vertex(this, entity_id, i), "fill");
             this.frame_draws++;
         }
     }
@@ -90,7 +91,7 @@ export class Engine {
         for (let i = 0; i < entity.geometry.edges.length; i++) {
             let a = entity.points[entity.geometry.edges[i][0]];
             let b = entity.points[entity.geometry.edges[i][1]];
-            this.display.line(a, b, entity.renderer.edgeShader(this, entity_id, i));
+            this.display.line(a, b, entity.renderer.edge(this, entity_id, i));
             this.frame_draws++;
         }
     }
@@ -102,7 +103,7 @@ export class Engine {
             for (let j = 0; j < entity.geometry.faces[i].length; j++) {
                 vertices[j] = entity.points[entity.geometry.faces[i][j]];
             }
-            this.display.polygon(vertices, entity.renderer.faceShader(this, entity_id, i));
+            this.display.polygon(vertices, entity.renderer.face(this, entity_id, i));
             this.frame_draws++;
         }
     }

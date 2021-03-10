@@ -3,6 +3,7 @@ import Canvas from "./js/canvas.js";
 import { Engine, Scene } from "./js/engine.js";
 import Entity from "./js/entity.js";
 import Geometry from "./js/geometry.js";
+import { _, D, T, Q } from "./js/utils.js";
 
 const setCanvasSize = () => {
     document.getElementById("main").width = window.innerWidth;
@@ -22,7 +23,7 @@ window.onload = async () => {
     });
 
     chrome.storage.local.get("sceneData", (res) => {
-        console.log(res);
+        //console.log(res);
 
         if (Object.keys(res).length === 0) {
             ready(defaultJSON, drawDebug);
@@ -41,6 +42,6 @@ const ready = async (json, drawDebug) => {
 
     let display = new Canvas("#main", [ 1, 1 ], [], "center", "#000000", "#FFFFFF").clear();
     let engine = new Engine(display, entities, drawDebug ? "debugInfo" : false);
-
+    
     engine.loop(0);
 }

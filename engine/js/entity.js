@@ -34,11 +34,11 @@ export default class Entity {
             renderEdges: true,
             renderFaces: true,
             useShaders: true,
-            shaderPath: {},
+            shaders: {},
         };
     }
 
-    static shaderTypes = [ "vertexShader", "edgeShader", "faceShader" ];
+    static shaderTypes = [ "vertex", "edge", "face" ];
 
     constructor(transform, geometry, renderer, scripts = [], meta) {
         if (typeof geometry === "string") geometry = Geometry[geometry.toUpperCase()] || Geometry.EMPTY;
@@ -52,7 +52,7 @@ export default class Entity {
 
         return new Promise(resolve => {
             this.importScripts(scripts).then(() => {
-                this.importShaders(this.renderer.shaderPath).then(resolve);
+                this.importShaders(this.renderer.shaders).then(resolve);
             });
         });
     }
@@ -93,9 +93,22 @@ export default class Entity {
     }
 
     async importScripts(scripts) {
+        if (!Array.isArray(scripts)) {
+            scripts = [ scripts ];
+        }
+        for (let i = 0; i < scripts.length; i++) {
+            if (typeof scripts[i] == "string") {
+                scripts[i] = { path: scripts[i], args: [] };
+                continue;
+            }
+            if (!scripts[i].args) {
+                scripts[i].args = [];
+            }
+            scripts[i].args = scripts[i].args.map(arg => arg === null ? undefined : arg);
+        }
         await Promise.all(scripts.map(async ({ path, args }, index) => {
             this.scripts[index] = {
-                ...Object.fromEntries(Object.entries(await import(`./scripts/${path}`))
+                ...Object.fromEntries(Object.entries(await import(`./scripts/${path}.js`))
                     .map(([ key, method ]) => [ key, method.bind(this, args || []) ])),
                 path,
                 args,
@@ -104,14 +117,25 @@ export default class Entity {
         return this;
     }
 
-    async importShaders(path) {
-        if (typeof path == "string") {
-            path = Object.fromEntries(Entity.shaderTypes.map(shader => [ shader, path ]));
+    async importShaders(shaders) {
+        if (typeof shaders == "string") {
+            this.renderer.shaders = {};
+            shaders = { path: shaders, args: [] };
         }
-        await Promise.all(Object.entries(path).map(async ([ shader, shaderPath ]) => {
-            this.renderer[shader] = (await import(`./shaders/${shaderPath}`))[shader].bind(this);
+        if (shaders.path) {
+            shaders = Object.fromEntries(Entity.shaderTypes.map(shaderType => [ shaderType, shaders ]));
+        }
+        await Promise.all(Object.entries(shaders).map(async ([ shaderType, shaderData ]) => {
+            if (typeof shaderData == "string") {
+                shaderData = { path: shaderData, args: [] }
+            }
+            else if (!shaderData.args) {
+                shaderData.args = [];
+            }
+            shaderData.args = shaderData.args.map(arg => arg === null ? undefined : arg);
+            this.renderer[shaderType] = (await import(`./shaders/${shaderData.path}.js`))[shaderType].bind(this, shaderData.args);
+            this.renderer.shaders[shaderType] = shaderData;
         }));
-        this.renderer.shaderPath = path;
         return this;
     }
 }

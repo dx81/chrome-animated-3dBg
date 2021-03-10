@@ -389,6 +389,70 @@ export default class Geometry {
         };
     }
 
+    /*
+    // TODO: fix
+    static mergeFaces(geometry, faces) {
+        let face = geometry.faces[faces[0]];
+        console.log("init", face);
+        for (let i = 1; i < faces.length; i++) {
+            for (let j = 0; j < face.length; j++) {
+                console.log(geometry.faces[faces[i]]);
+
+
+                console.log("search", face[j], )
+                let index = geometry.faces[faces[i]].indexOf(face[j]);
+                if (index == -1) continue;
+
+                // point exists
+                let next = face[j + 1];
+
+                // after
+                if (next == this.circularGet(geometry.faces[faces[i]], index + 1)) {
+
+                    face = [
+                        ...face,
+                        ...face.slice(0, j),
+                        ...geometry.faces[faces[i]].slice(0, index).reverse(),
+                        ...geometry.faces[faces[i]],
+                        //...geometry.faces[faces[i]].slice(0, index).reverse(),
+                        //...geometry.faces[faces[i]].slice(index + 2).reverse(),
+                    ];
+
+                    console.log("face", face)
+                    break;
+                }
+
+                // before
+                if (next == this.circularGet(geometry.faces[faces[i]], index - 1)) {
+                    face = [
+                        ...face,
+                        ...face.slice(0, j),
+                        ...geometry.faces[faces[i]].slice(index),
+                        ...geometry.faces[faces[i]],
+                        //...geometry.faces[faces[i]].slice(index),
+                        //...geometry.faces[faces[i]].slice(0, index - 1),
+                        //...face.slice(j)
+                    ];
+                    break;
+                }
+            }
+        }
+        for (let i = faces.length; i >= 0; i--) {
+            geometry.faces.splice(faces[i], 1);
+        }
+        geometry.faces.splice(0, geometry.faces.length);
+        geometry.faces.push(face);
+        console.log(geometry);
+        return geometry;
+    }
+
+    static circularGet(array, index) {
+        index = index % array.length;
+        if (index < 0) index = array.length + index;
+        return array[index % array.length];
+    }
+    */
+
     static CUBOID_Faces = (() => {
         let out = []; let iter = { length: 4 };
         out.push(Array.from(iter, (_, i) => i));

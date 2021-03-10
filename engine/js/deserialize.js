@@ -6,22 +6,36 @@ const newLineChar = "<br/>";
 const layout2 = new ArrayAbstract(null,
     new ObjectAbstract({
         transform : new ObjectAbstract({
-            position : new ArrayAbstract(3, new NumberAbstract()),
-            rotation : new ArrayAbstract(3, new NumberAbstract()),
-            scale : new ArrayAbstract(3, new NumberAbstract()),
-            offset : new ArrayAbstract(3, new NumberAbstract())
+            position : new ArrayAbstract(3,
+                new NumberAbstract()
+            ),
+            rotation : new ArrayAbstract(3,
+                new NumberAbstract()
+            ),
+            scale : new ArrayAbstract(3,
+                new NumberAbstract()
+            ),
+            offset : new ArrayAbstract(3,
+                new NumberAbstract()
+            )
         }),
         geometry : new Diverse(
             new StringAbstract(),
             new ObjectAbstract({
                 vertices : new ArrayAbstract(null,
-                    new ArrayAbstract(3, new NumberAbstract())
+                    new ArrayAbstract(3,
+                        new NumberAbstract()
+                    )
                 ),
                 edges : new ArrayAbstract(null,
-                    new ArrayAbstract(2, new NumberAbstract())
+                    new ArrayAbstract(2,
+                        new NumberAbstract()
+                    )
                 ),
                 faces : new ArrayAbstract(null,
-                    new ArrayAbstract(null, new NumberAbstract())
+                    new ArrayAbstract(null,
+                        new NumberAbstract()
+                    )
                 )
             }
         )),
@@ -34,7 +48,8 @@ const layout2 = new ArrayAbstract(null,
             ),
             faceColor : new Nullable(
                 new StringAbstract(/^#[a-zA-Z0-9]{6}$/)),
-            render : new Nullable(new BooleanAbstract(true)
+            render : new Nullable(
+                new BooleanAbstract(true)
             ),
             renderVertices : new Nullable(
                 new BooleanAbstract(true)
@@ -48,23 +63,74 @@ const layout2 = new ArrayAbstract(null,
             useShaders : new Nullable(
                 new BooleanAbstract(true)
             ),
-            shaderPath : new Nullable(
-                new ObjectAbstract({
-                    vertexShader : new StringAbstract(),
-                    edgeShader : new StringAbstract(),
-                    faceShader : new StringAbstract()
-                })
+            shaders : new Nullable(
+                new Diverse(
+                    new StringAbstract(),
+                    new ObjectAbstract({
+                        path : new Nullable(
+                            new StringAbstract()
+                        ),
+                        args : new Nullable(
+                            new ArrayAbstract(null,
+                                new AnyAbstract()
+                            )
+                        )
+                    }),
+                    new ObjectAbstract({
+                        vertex : new Nullable(
+                            new ObjectAbstract({
+                                path : new Nullable(
+                                    new StringAbstract()
+                                ),
+                                args : new Nullable(
+                                    new ArrayAbstract(null,
+                                        new AnyAbstract()
+                                    )
+                                )
+                            })
+                        ),
+                        edge : new Nullable(
+                            new ObjectAbstract({
+                                path : new Nullable(
+                                    new StringAbstract()
+                                ),
+                                args : new Nullable(
+                                    new ArrayAbstract(null,
+                                        new AnyAbstract()
+                                    )
+                                )
+                            })
+                        ),
+                        face : new Nullable(
+                            new ObjectAbstract({
+                                path : new Nullable(
+                                    new StringAbstract()
+                                ),
+                                args : new Nullable(
+                                    new ArrayAbstract(null,
+                                        new AnyAbstract()
+                                    )
+                                )
+                            })
+                        )
+                    })
+                )
             )
         }),
         scripts : new Nullable(
             new ArrayAbstract(null,
-                new ObjectAbstract({
-                    path : new StringAbstract(),
-                    args : new Nullable(
-                        new ArrayAbstract(null, new AnyAbstract())
-                    )
-                }
-            ))
+                new Diverse(
+                    new StringAbstract(),
+                    new ObjectAbstract({
+                        path : new StringAbstract(),
+                        args : new Nullable(
+                            new ArrayAbstract(null,
+                                new AnyAbstract()
+                            )
+                        )
+                    })
+                )
+            )
         )
     }
 ));

@@ -26,7 +26,7 @@ body {
     bottom: 1%;
 
     background: transparent;
-    border: none;
+    border: 1px black;
     font-size: medium;
 }
 

@@ -42,6 +42,6 @@ const ready = async (json, drawDebug) => {
 
     let display = new Canvas("#main", [ 1, 1 ], [], "center", "#000000", "#FFFFFF").clear();
     let engine = new Engine(display, entities, drawDebug ? "debugInfo" : false);
-    
+
     engine.loop(0);
 }

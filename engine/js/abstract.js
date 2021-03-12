@@ -10,7 +10,7 @@ export class ArrayAbstract {
     }
 
     validate (input) {
-        if (!Array.isArray (input)) return false;
+        if (!Array.isArray(input)) return false;
         if (this.size !== null && input.length !== this.size) {
             this.internalErrors.push("Array is of wrong length.");
             return false;
@@ -20,7 +20,7 @@ export class ArrayAbstract {
             if (failed) return true;
             if (this.type.validate(val)) return false;
 
-            this.internalErrors.push("Error at index " + index + ":", ...this.type.error(val).map(str => tabChar + str))
+            this.internalErrors.push("Error at index " + index + ":", ...this.type.error(val).map(str => tabChar + str));
             return true;
         }, false);
     }

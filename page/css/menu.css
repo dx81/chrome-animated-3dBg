@@ -1,6 +1,7 @@
 .menu {
     display: none;
-    background: white;
+    background: black;
+    color: white;
     padding: 10px;
 
     position: absolute;
@@ -12,13 +13,15 @@
     margin-top: -250px;   /* negative half of height above */
 
     border-radius: 7px;
+    border: 1px solid white;
 }
 
 .menuButton {
     background: transparent;
     border-radius: 3px;
-    border: solid 1px black;
+    border: solid 1px white;
     cursor: pointer;
+    color: white;
 }
 
 .normalLabel {
@@ -26,7 +29,7 @@
 }
 
 a {
-    color: black;
+    color: white;
 }
 
 .divSpacer {

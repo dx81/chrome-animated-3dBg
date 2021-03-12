@@ -6,16 +6,16 @@ const newLineChar = "<br/>";
 const layout2 = new ArrayAbstract(null,
     new ObjectAbstract({
         transform : new ObjectAbstract({
-            position : new ArrayAbstract(3,
+            position : new ArrayAbstract(null,
                 new NumberAbstract()
             ),
-            rotation : new ArrayAbstract(3,
+            rotation : new ArrayAbstract(null,
                 new NumberAbstract()
             ),
-            scale : new ArrayAbstract(3,
+            scale : new ArrayAbstract(null,
                 new NumberAbstract()
             ),
-            offset : new ArrayAbstract(3,
+            offset : new ArrayAbstract(null,
                 new NumberAbstract()
             )
         }),
@@ -23,7 +23,7 @@ const layout2 = new ArrayAbstract(null,
             new StringAbstract(),
             new ObjectAbstract({
                 vertices : new ArrayAbstract(null,
-                    new ArrayAbstract(3,
+                    new ArrayAbstract(null,
                         new NumberAbstract()
                     )
                 ),

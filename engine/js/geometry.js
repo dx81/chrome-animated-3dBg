@@ -4,6 +4,14 @@ import Matrix from "./matrix.js";
 
 export default class Geometry {
 
+    static GEOMETRIES = [
+        "TETRAHEDRON",
+        "CUBE",
+        "OCTAHEDRON",
+        "DODECAHEDRON",
+        "ICOSAHEDRON",
+    ];
+
     static get EMPTY() {
         return {
             vertices: [],

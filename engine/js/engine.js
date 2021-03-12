@@ -81,7 +81,7 @@ export class Engine {
     renderVertices(entity, entity_id) {
         if (!entity.renderer.renderVertices) return;
         for (let i = 0; i < entity.points.length; i++) {
-            this.display.circle(entity.points[i], 4, entity.renderer.vertex(this, entity_id, i), "fill");
+            this.display.circle(entity.points[i], 1, entity.renderer.vertex(this, entity_id, i), "fill");
             this.frame_draws++;
         }
     }

@@ -1,0 +1,28 @@
+.menu {
+    display: none;
+    background: black;
+    color: white;
+    padding: 10px;
+
+    border-radius: 7px;
+    border: 1px solid white;
+}
+
+.smallSize {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 600px;
+    height: 500px;
+    margin-left: -300px;   /* negative half of width above */
+    margin-top: -250px;   /* negative half of height above */
+}
+
+.largeSize {
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: 1vh auto auto;
+    width: 94vw;
+    height: 94vh;
+}

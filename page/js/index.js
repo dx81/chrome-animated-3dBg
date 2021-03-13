@@ -1,22 +1,10 @@
-import mapToButtons from "./scenePresets.js";
-import JSONManagement from "./jsonManagement.js";
-import {menu, errorBoxClose, debugBox} from "./diverseFunctions.js"
+import mapToButtons from "./htmlElements/scenePresets.js";
+import JSONManagement from "./htmlElements/jsonManagement.js";
+import {debugBox} from "./htmlElements/diverseFunctions.js"
+import bindDom from "./htmlElements/domBindings.js";
 
 document.addEventListener('DOMContentLoaded', function() {
-    let DOMBindings = {
-        openButton : ["click", menu.open],
-        closeButton : ["click", menu.close],
-
-        uploadButton : ["change", JSONManagement.uploadHandler],
-        clearButton : ["click", JSONManagement.clearHandler],
-
-        errorCloseButton : ["click", errorBoxClose],
-        showDebugInfo : ["click", debugBox.setValue]
-    }
-
-    for (let key in DOMBindings) {
-        document.getElementById(key).addEventListener(DOMBindings[key][0], DOMBindings[key][1]);
-    }
+    bindDom();
 
     JSONManagement.setupDownload();
     debugBox.loadValue();

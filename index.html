@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <title>New tab</title>
     <link href="page/css/page.css" rel="stylesheet"/>
-    <link href="page/css/menu.css" rel="stylesheet"/>
+    <link href="page/css/menuElements.css" rel="stylesheet"/>
+    <link href="page/css/menuDiv.css" rel="stylesheet"/>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -24,7 +25,7 @@
     </button>
 
     <!-- Menu -->
-    <div class="menu" id="menuDiv">
+    <div class="menu smallSize" id="menuDiv">
         <h4 style="text-align: center">Settings</h4>
         <p>
             Objects to render are defined by a JSON file (if no settings are present the default is used). <br/>
@@ -46,7 +47,10 @@
             <label for="clearButton" class="normalLabel">Clear current JSON:</label>
             <button id="clearButton" class="menuButton">Clear</button>
         </div>
-
+        <div class="divSpacer">
+            <label for="openSceneEditorButton" class="normalLabel">Open scene editor:</label>
+            <button id="openSceneEditorButton" class="menuButton">Open</button>
+        </div>
         <div class="divSpacer">
             <label for="showDebugInfo" class="normalLabel">Show debug information:</label><input id="showDebugInfo" type="checkbox" style="filter: grayscale(100%); transform: scale(1.2) translateY(2px);">
         </div>
@@ -58,14 +62,26 @@
             </div>
         </div>
 
-        <button class="menuButton" id="closeButton">Close</button>
+        <button class="menuButton closeButton" id="closeButton">Close</button>
     </div>
 
     <!-- Error display -->
-    <div class="menu" id="errorDiv">
+    <div class="menu smallSize" id="errorDiv">
         <h4 style="text-align: center">An error occurred attempting to validate JSON</h4>
         <p id="errorMessage"></p>
-        <button class="menuButton" id="errorCloseButton">Close</button>
+        <button class="menuButton closeButton" id="errorCloseButton">Close</button>
+    </div>
+
+    <!-- Scene editor -->
+    <div class="menu largeSize" id="sceneEditor">
+        <h4 style="text-align: center">
+            Scene editor
+        </h4>
+        <div id="sceneEditorContent">
+
+        </div>
+
+        <button class="menuButton closeButton" id="sceneEditorClose">Close</button>
     </div>
 </body>
 </html>

@@ -1,9 +1,10 @@
 import defaultJSON from "./defaultJSON.js"
+import Vector from "./js/vector.js";
 import Canvas from "./js/canvas.js";
 import { Engine, Scene } from "./js/engine.js";
 import Entity from "./js/entity.js";
 import Geometry from "./js/geometry.js";
-import { _, D, T, Q } from "./js/utils.js";
+import { _, D, T, Q, S } from "./js/utils.js";
 
 const setCanvasSize = () => {
     document.getElementById("main").width = window.innerWidth;
@@ -38,7 +39,10 @@ window.onload = async () => {
 }
 
 const ready = async (json, drawDebug) => {
-    let entities = await Scene.deserialize(json, "errorDiv", "errorMessage");
+    let entities = await Scene.deserialize(json.map(e => { return { ...e, ...{ transform: { ...e.transform, ... {
+        scale: Q(0.5),
+        position: Vector.scalar(e.transform.position, 1/300),
+    } } } } }), "errorDiv", "errorMessage");
 
     let display = new Canvas("#main", [ 1, 1 ], [], "center", "#000000", "#FFFFFF").clear();
     let engine = new Engine(display, entities, drawDebug ? "debugInfo" : false);

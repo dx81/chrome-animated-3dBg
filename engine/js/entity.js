@@ -57,41 +57,6 @@ export default class Entity {
         });
     }
 
-    update() {
-
-        let cos_x = Math.cos(this.transform.rotation[0]);
-        let sin_x = Math.sin(this.transform.rotation[0]);
-        let rotation_matrix_x = [
-            [ 1,      0,     0 ],
-            [ 0,  cos_x, sin_x ],
-            [ 0, -sin_x, cos_x ],
-        ];
-
-        let cos_y = Math.cos(this.transform.rotation[1]);
-        let sin_y = Math.sin(this.transform.rotation[1]);
-        let rotation_matrix_y = [
-            [ cos_y, 0, -sin_y ],
-            [     0, 1,      0 ],
-            [ sin_y, 0,  cos_y ],
-        ];
-
-        let cos_z = Math.cos(this.transform.rotation[2]);
-        let sin_z = Math.sin(this.transform.rotation[2]);
-        let rotation_matrix_z = [
-            [  cos_z, sin_z, 0 ],
-            [ -sin_z, cos_z, 0 ],
-            [      0,     0, 1 ],
-        ];
-
-        for (let i = 0; i < this.geometry.vertices.length; i++) {
-            let vertex = [ Vector.add(Vector.multiply(this.geometry.vertices[i], this.transform.scale), this.transform.offset) ];
-            vertex = Matrix.multiply(rotation_matrix_x, vertex);
-            vertex = Matrix.multiply(rotation_matrix_y, vertex);
-            vertex = Matrix.multiply(rotation_matrix_z, vertex);
-            this.coords[i] = [ Vector.add(vertex[0], this.transform.position) ];
-        }
-    }
-
     async importScripts(scripts) {
         if (!Array.isArray(scripts)) {
             scripts = [ scripts ];

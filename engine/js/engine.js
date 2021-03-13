@@ -1,7 +1,11 @@
 // Oliver Kovacs 2021 - engine.js
 
 import Matrix from "./matrix.js";
+import Vector from "./vector.js";
+import Rotate from "./rotate.js";
 import Deserializer from "./deserialize.js";
+import Geometry from "./geometry.js";
+import { D } from "./utils.js";
 
 Math.roundn = (number, n) => {
     let x = Math.pow(10, n);
@@ -22,11 +26,21 @@ export class Engine {
         this.PROJECTION_MATRIX = Engine.ORTHOGRAPHIC_PROJECTION_MATRIX;
     }
 
-    static ORTHOGRAPHIC_PROJECTION_MATRIX = [
-        [ 1, 0 ],
-        [ 0, 1 ],
-        [ 0, 0 ]
-    ];
+    static Rotate = Rotate;
+
+    static PROJECTION_MATRIX = [
+        [
+            [ 1, 0 ],
+            [ 0, 1 ],
+            [ 0, 0 ],
+        ],
+        [
+            [ 1, 0, 0 ],
+            [ 0, 1, 0 ],
+            [ 0, 0, 1 ],
+            [ 0, 0, 0 ],
+        ]
+    ]
 
     loop (ts) {
         window.requestAnimationFrame(ts => this.loop(ts));
@@ -67,10 +81,22 @@ export class Engine {
         
         if (!entity.renderer.render) return;
 
-        entity.update();
+        this.rotate(entity);
 
+        let scale = [];
+        scale[3] = D(500);
+        scale[4] = D(500);
+
+        let distance = 1.7;
         for (let i = 0; i < entity.coords.length; i++) {
-            entity.points[i] = Matrix.multiply(this.PROJECTION_MATRIX, entity.coords[i])[0];
+
+            let dimension = Geometry.getDimension(entity.geometry);
+            for (let d = dimension; d > 2; d--) {
+                let w = 1 / (distance + entity.coords[i][0][d - 1]);
+                // w = 1;
+                entity.coords[i] = Matrix.multiply(Matrix.scalar(Engine.PROJECTION_MATRIX[d - 3], w), entity.coords[i]);
+            }
+            entity.points[i] = Vector.multiply(entity.coords[i][0], scale[dimension]);
         }
 
         this.renderFaces(entity, id);
@@ -108,7 +134,47 @@ export class Engine {
         }
     }
 
+    rotate(entity) {
+        if (Geometry.getDimension(entity.geometry) === 4) {
+            return this.rotate4d(entity);
+        }
+        this.rotate3d(entity);
+    }
 
+    rotate3d(entity) {
+        const rotation_matrix_x = Engine.Rotate.x(entity.transform.rotation[0]);
+        const rotation_matrix_y = Engine.Rotate.y(entity.transform.rotation[1]);
+        const rotation_matrix_z = Engine.Rotate.z(entity.transform.rotation[2]);
+
+        for (let i = 0; i < entity.geometry.vertices.length; i++) {
+            let vertex = [ Vector.add(Vector.multiply(entity.geometry.vertices[i], entity.transform.scale), entity.transform.offset) ];
+            vertex = Matrix.multiply(rotation_matrix_x, vertex);
+            vertex = Matrix.multiply(rotation_matrix_y, vertex);
+            vertex = Matrix.multiply(rotation_matrix_z, vertex);
+            entity.coords[i] = [ Vector.add(vertex[0], entity.transform.position) ];
+        }
+    }
+
+    rotate4d(entity) {
+
+        const rotation_matrix_xy = Engine.Rotate.xy(entity.transform.rotation[0]);
+        const rotation_matrix_xz = Engine.Rotate.xz(entity.transform.rotation[1]);
+        const rotation_matrix_xw = Engine.Rotate.xw(entity.transform.rotation[2]);
+        const rotation_matrix_yz = Engine.Rotate.yz(entity.transform.rotation[3]);
+        const rotation_matrix_yw = Engine.Rotate.yw(entity.transform.rotation[4]);
+        const rotation_matrix_zw = Engine.Rotate.zw(entity.transform.rotation[5]);
+        
+        for (let i = 0; i < entity.geometry.vertices.length; i++) {
+            let vertex = [ Vector.add(Vector.multiply(entity.geometry.vertices[i], entity.transform.scale), entity.transform.offset) ];
+            vertex = Matrix.multiply(rotation_matrix_xy, vertex);
+            vertex = Matrix.multiply(rotation_matrix_xz, vertex);
+            vertex = Matrix.multiply(rotation_matrix_xw, vertex);
+            vertex = Matrix.multiply(rotation_matrix_yz, vertex);
+            vertex = Matrix.multiply(rotation_matrix_yw, vertex);
+            vertex = Matrix.multiply(rotation_matrix_zw, vertex);
+            entity.coords[i] = [ Vector.add(vertex[0], entity.transform.position) ];
+        }
+    }
 
     toHexColor(r, g, b) {
         return `#${this.toHex(r)}${this.toHex(g)}${this.toHex(b)}`;

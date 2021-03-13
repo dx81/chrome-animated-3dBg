@@ -1,5 +1,6 @@
 import cubes from "./cubes.js";
 import geometry from "./geometry.js";
+import tesseract from "./tesseract.js";
 import d12 from "./d12.js";
 import d20 from "./d20.js";
 import d12d20 from "./d12d20.js";
@@ -13,6 +14,7 @@ import empty from "./empty.js";
 export default {
     cubes,
     geometry,
+    tesseract,
     d12,
     d20,
     d12d20,

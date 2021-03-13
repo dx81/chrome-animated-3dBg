@@ -88,7 +88,7 @@ export default class Entity {
             shaders = { path: shaders, args: [] };
         }
         if (shaders.path) {
-            shaders = Object.fromEntries(Entity.shaderTypes.map(shaderType => [ shaderType, shaders ]));
+            shaders = Object.fromEntries(Entity.shaderTypes.map(shaderType => [ shaderType, {...shaders} ]));
         }
         await Promise.all(Object.entries(shaders).map(async ([ shaderType, shaderData ]) => {
             if (typeof shaderData == "string") {

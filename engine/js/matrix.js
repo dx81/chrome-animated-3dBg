@@ -7,6 +7,16 @@ export default class Matrix extends Array {
         super(...args);
     }
 
+    static identity(n, out = []) {
+        for (let x = 0; x < n; x++) {
+            out[x] = [];
+            for (let y = 0; y < n; y++) {
+                out[x][y] = x === y ? 1 : 0;
+            }
+        }
+        return out;
+    }
+
     static multiply(mat1, mat2, out = []) {
         for (let x = 0; x < mat2.length; x++) {
             out[x] = [];

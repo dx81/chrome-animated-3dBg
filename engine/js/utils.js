@@ -1,6 +1,7 @@
 export const _ = undefined;
 
-export const D = n => [ n, n ];
-export const T = n => [ n, n, n ];
-export const Q = n => [ n, n, n, n ];
-export const S = n => [ n, n, n, n, n, n ];
+export const D = x => [ x, x ];
+export const T = x => [ x, x, x ];
+export const Q = x => [ x, x, x, x ];
+export const S = x => [ x, x, x, x, x, x ];
+export const N = (x, n) => Array(n).fill(x);

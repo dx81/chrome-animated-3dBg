@@ -1,7 +1,3 @@
-
-// Oliver Kovacs
-// lib - random.ts
-
 export default class Random {
 
     static random = Math.random;

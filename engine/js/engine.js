@@ -28,19 +28,16 @@ export class Engine {
 
     static Rotate = Rotate;
 
-    static PROJECTION_MATRIX = [
-        [
-            [ 1, 0 ],
-            [ 0, 1 ],
-            [ 0, 0 ],
-        ],
-        [
-            [ 1, 0, 0 ],
-            [ 0, 1, 0 ],
-            [ 0, 0, 1 ],
-            [ 0, 0, 0 ],
-        ]
-    ]
+    static PROJECTION_MATRIX(dimension, scale) {
+        let out = [];
+        for (let x = 0; x < dimension; x++) {
+            out[x] = [];
+            for (let y = 0; y < dimension - 1; y++) {
+                out[x][y] = x === y ? scale : 0;
+            }
+        }
+        return out;
+    }
 
     loop (ts) {
         window.requestAnimationFrame(ts => this.loop(ts));
@@ -83,10 +80,6 @@ export class Engine {
 
         this.rotate(entity);
 
-        let scale = [];
-        scale[3] = D(500);
-        scale[4] = D(500);
-
         let distance = 1.7;
         for (let i = 0; i < entity.coords.length; i++) {
 
@@ -94,9 +87,9 @@ export class Engine {
             for (let d = dimension; d > 2; d--) {
                 let w = 1 / (distance + entity.coords[i][0][d - 1]);
                 // w = 1;
-                entity.coords[i] = Matrix.multiply(Matrix.scalar(Engine.PROJECTION_MATRIX[d - 3], w), entity.coords[i]);
+                entity.coords[i] = Matrix.multiply(Engine.PROJECTION_MATRIX(d, w), entity.coords[i]);
             }
-            entity.points[i] = Vector.multiply(entity.coords[i][0], scale[dimension]);
+            entity.points[i] = Vector.scalar(entity.coords[i][0], 2000);
         }
 
         this.renderFaces(entity, id);
@@ -135,10 +128,32 @@ export class Engine {
     }
 
     rotate(entity) {
-        if (Geometry.getDimension(entity.geometry) === 4) {
-            return this.rotate4d(entity);
+
+        let dimension = Geometry.getDimension(entity.geometry);
+        let rotations = Rotate.rotations(dimension);
+        let rotation_matrices = [];
+
+        for (let i = 0; i < rotations.length; i++) {
+            rotation_matrices[i] = Rotate.matrix(...rotations[i], dimension, entity.transform.rotation[i])
         }
-        this.rotate3d(entity);
+
+        for (let i = 0; i < entity.geometry.vertices.length; i++) {
+
+            let vertex = [ Vector.add(Vector.multiply(entity.geometry.vertices[i], entity.transform.scale), entity.transform.offset) ];
+
+            for (let j = 0; j < rotation_matrices.length; j++) {
+                vertex = Matrix.multiply(rotation_matrices[j], vertex);
+            }
+
+            entity.coords[i] = [ Vector.add(vertex[0], entity.transform.position) ];
+        }
+
+        console.log()
+
+        //if (Geometry.getDimension(entity.geometry) === 4) {
+        //    return this.rotate4d(entity);
+        //}
+        //this.rotate3d(entity);
     }
 
     rotate3d(entity) {

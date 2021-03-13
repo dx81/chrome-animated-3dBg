@@ -367,6 +367,44 @@ export default class Geometry {
         };
     }
 
+    static HYPERCUBE_NAMES = [
+        "Square",
+        "Cube",
+        "Tesseract",
+        "Penteract",
+        "Hexeract",
+        "Hepteract",
+        "Octeract",
+        "Enneract",
+        "Dekeract",
+    ]
+
+    static HYPERCUBE(dimension) {
+        let n = Math.pow(2, dimension);
+        let vertices = [];
+        for (let i = 0; i < n; i++) {
+            vertices[i] = [];
+            for (let j = 0; j < dimension; j++) {
+                vertices[i][j] = 2 * (Math.floor(i / Math.pow(2, j)) % 2) - 1;
+            }
+        }
+        let edges = [];
+        for (let i = 1; i < dimension + 1; i++) {
+            let s1 = Math.pow(2, i);
+            let s2 = Math.pow(2, i - 1);
+            for (let j = 0; j < n; j += s1) {
+                for (let k = 0; k < s2; k++) {
+                    edges.push([ j + k, j + k + s2 ]);
+                }
+            }
+        }
+        return {
+            vertices,
+            edges,
+            faces : [],
+        };
+    }
+
     static get cube_faces_triangles() {
         return [
             [ 0, 1, 3 ],
@@ -636,3 +674,8 @@ export default class Geometry {
 // cube faces triangles
 //return this.CUBOID_Faces.map(face => [ face [0], face[1] , face[3], face[2] ]);
 //return this.CUBE.faces.map(face => [ face [0], face[1] , face[3] ]);
+
+//console.log(Geometry.HYPERCUBE(2));
+//console.log(Geometry.HYPERCUBE(3));
+//console.log(Geometry.HYPERCUBE(4));
+//console.log(Geometry.HYPERCUBE(5));

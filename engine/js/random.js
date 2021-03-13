@@ -11,7 +11,7 @@ export default class Random {
     }
 
     static hex(min, max) {
-        this.int(min, max).toString(16);
+        return this.int(min, max).toString(16);
     }
 
     static string(string, length) {

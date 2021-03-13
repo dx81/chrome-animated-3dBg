@@ -90,10 +90,11 @@ export class BooleanAbstract {
 }
 
 export class ObjectAbstract {
-    constructor (obj) {
+    constructor (obj, ignoreExtra) {
         this.obj = obj;
         this.keyMissingError = false;
         this.errorLog = [];
+        this.ignoreExtra = ignoreExtra ? ignoreExtra : false;
 
         this.name = "Object";
     }
@@ -101,10 +102,15 @@ export class ObjectAbstract {
     validate (input) {
         if (typeof input !== "object") return false;
 
-        for (let key in input) {
-            if (!(key in this.obj)) {
-                this.errorLog.push(`Key error: did not expect key "${key}". Please remove.`);
-                return false;
+        if (!this.ignoreExtra) {
+            for (let key in input) {
+                if (!(key in this.obj)) {
+                    console.log(input);
+                    console.log(this.obj)
+
+                    this.errorLog.push(`Key error: did not expect key "${key}". Please remove.`);
+                    return false;
+                }
             }
         }
 

@@ -1,4 +1,4 @@
-import Scenes from "../../engine/js/scenes/scenes.js"
+import Scenes from "../../../engine/js/scenes/scenes.js"
 
 const mapToButtons = () => {
     let count = 0;

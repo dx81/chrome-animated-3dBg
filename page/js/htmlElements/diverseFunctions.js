@@ -25,3 +25,12 @@ export const debugBox = {
         })
     }
 }
+
+export const sceneEditorDisplay = {
+    open : () => {
+        document.getElementById("sceneEditor").style.display = "block";
+    },
+    close : () => {
+        document.getElementById("sceneEditor").style.display = "none";
+    }
+}

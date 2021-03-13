@@ -39,13 +39,15 @@ window.onload = async () => {
 }
 
 const ready = async (json, drawDebug) => {
-    let entities = await Scene.deserialize(json.map(e => { return { ...e, ...{ transform: { ...e.transform, ... {
+    //let { entities, options } = await Scene.deserialize(json, "errorDiv", "errorMessage");
+
+    let { entities, options } = await Scene.deserialize({ entities : json.entities.map(e => { return { ...e, ...{ transform: { ...e.transform, ... {
         scale: Q(0.5),
         position: Vector.scalar(e.transform.position, 1/300),
-    } } } } }), "errorDiv", "errorMessage");
+    } } } } } ), options : json.options }, "errorDiv", "errorMessage");
 
     let display = new Canvas("#main", [ 1, 1 ], [], "center", "#000000", "#FFFFFF").clear();
-    let engine = new Engine(display, entities, drawDebug ? "debugInfo" : false);
+    let engine = new Engine(display, entities, drawDebug ? "debugInfo" : false, options);
 
     let dim = 5;
     let axis_count = (dim * (dim - 1)) / 2

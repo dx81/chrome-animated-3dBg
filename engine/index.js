@@ -60,11 +60,14 @@ const ready = async (json, drawDebug) => {
         vertex: "rgb",
         edge: { path: "parallel", args: [ _, _, _ ] },
         face: "rgb",
-    } }, [ { path: "spin", args: [ rotd ] } ]));
+    } }, [
+        { path: "spin", args: [ rotd ] },
+        "control"
+    ]));
     }
     let i = 7;
     let axis_count = (i * (i - 1)) / 2;
-    await add(N(0, i), N(0, axis_count), N(0.5, axis_count), i);
+    await add(N(0, i), N(0, axis_count), N(0.0, axis_count), i);
 
     console.log(Scene.serialize(engine.scene));
 

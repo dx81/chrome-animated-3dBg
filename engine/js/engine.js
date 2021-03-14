@@ -5,7 +5,7 @@ import Vector from "./vector.js";
 import Rotate from "./rotate.js";
 import Deserializer from "./deserialize.js";
 import Geometry from "./geometry.js";
-import { D } from "./utils.js";
+import keyboard from "./keyboard.js";
 
 Math.roundn = (number, n) => {
     let x = Math.pow(10, n);
@@ -25,6 +25,8 @@ export class Engine {
 
         this.PROJECTION_MATRIX = Engine.ORTHOGRAPHIC_PROJECTION_MATRIX;
     }
+
+    kb = keyboard;
 
     static Rotate = Rotate;
 

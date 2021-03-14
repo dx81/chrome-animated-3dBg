@@ -49,9 +49,7 @@ const ready = async (json, drawDebug) => {
     let display = new Canvas("#main", [ 1, 1 ], [], "center", "#000000", "#FFFFFF").clear();
     let engine = new Engine(display, entities, drawDebug ? "debugInfo" : false, options);
 
-    let dim = 5;
-    let axis_count = (dim * (dim - 1)) / 2
-    const add = async (pos, rot, rotd) => {
+    const add = async (pos, rot, rotd, dim) => {
         engine.scene.push(await new Entity({
             position: pos,
             rotation: rot,
@@ -60,11 +58,14 @@ const ready = async (json, drawDebug) => {
         },
         { ...Geometry.HYPERCUBE(dim) }, { useShaders: 1, renderVertices: 0, shaders: {
         vertex: "rgb",
-        edge: { path: "rgb", args: [ _, T(0.5), T(1) ] },
-        face: { path: "rgb", args: [ _, T(1), T(0.5) ] },
+        edge: { path: "parallel", args: [ _, _, _ ] },
+        face: "rgb",
     } }, [ { path: "spin", args: [ rotd ] } ]));
     }
-    await add(N(0, dim), N(0, axis_count), N(0.5, axis_count));
+    let i = 7;
+    let axis_count = (i * (i - 1)) / 2;
+    await add(N(0, i), N(0, axis_count), N(0.5, axis_count), i);
+
     console.log(Scene.serialize(engine.scene));
 
     engine.loop(0);

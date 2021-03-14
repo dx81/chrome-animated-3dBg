@@ -3,15 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <title>New tab</title>
+
     <link href="page/css/page.css" rel="stylesheet"/>
     <link href="page/css/menuElements.css" rel="stylesheet"/>
     <link href="page/css/menuDiv.css" rel="stylesheet"/>
+    <link href="page/css/sceneEditor.css" rel="stylesheet"/>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
 
-    <script src="page/js/index.js" type="module"></script>
+    <script src="page/js/ui.js" type="module"></script>
     <script src="engine/index.js" type="module"></script>
 </head>
 <body>
@@ -26,7 +28,7 @@
 
     <!-- Menu -->
     <div class="menu smallSize" id="menuDiv">
-        <h4 style="text-align: center">Settings</h4>
+        <h2>Settings</h2>
         <p>
             Objects to render are defined by a JSON file (if no settings are present the default is used). <br/>
             See the documentation <a href="https://github.com/dx81/chrome-animated-3dBg/blob/master/docs/json.md">here</a>.
@@ -67,16 +69,17 @@
 
     <!-- Error display -->
     <div class="menu smallSize" id="errorDiv">
-        <h4 style="text-align: center">An error occurred attempting to validate JSON</h4>
+        <h2 style="text-align: center">An error occurred attempting to validate JSON</h2>
         <p id="errorMessage"></p>
         <button class="menuButton closeButton" id="errorCloseButton">Close</button>
     </div>
 
     <!-- Scene editor -->
     <div class="menu largeSize" id="sceneEditor">
-        <h4 style="text-align: center">
+        <h2>
             Scene editor
-        </h4>
+        </h2>
+
         <div id="sceneEditorContent">
 
         </div>

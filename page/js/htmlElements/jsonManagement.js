@@ -38,6 +38,7 @@ const jsMg = {
             if ("sceneData" in res) res = res.sceneData;
 
             document.getElementById("downloadButtonWrapper").setAttribute("href", `data:text/plain;charset=utf-8,${encodeURIComponent(JSON.stringify(res))}`);
+            return res;
         })
     }
 }

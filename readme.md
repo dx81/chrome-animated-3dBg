@@ -1,3 +1,7 @@
+## NOTE: This repo is archived. The code has been left for reference, but abandoned in favor of [Chrome XD](https://github.com/dx81/chrome-xd).
+
+---
+
 ## Chrome extension: Animated new tab background
 
 [![GitHub language count](https://img.shields.io/github/languages/count/dx81/chrome-animated-3dBg)]()
